@@ -20,7 +20,7 @@ import net.gahfy.livebinders.extension.parentActivity
  *
  * __Related XML attribute:__ app:mutableAutoLink
  * @param textView the TextView on which to apply the mutable autolink mask
- * @param mask the mutable autolink mask. The value must be one of [null], [Linkify.ALL],
+ * @param mask the mutable autolink mask. The value must be one of null, [Linkify.ALL],
  * [Linkify.EMAIL_ADDRESSES], [Linkify.EMAIL_ADDRESSES], [Linkify.PHONE_NUMBERS], [Linkify.WEB_URLS]
  * @see TextView.setAutoLinkMask
  */

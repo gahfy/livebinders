@@ -84,11 +84,11 @@ class TextViewUnitTest {
         setMutableAutoSizeMaxTextSize(textView, mutableAutoSizeMax)
         mutableAutoSizeMax.value = 100
 
-        assertEquals("Autolink value must change", 100, textView.autoSizeMaxTextSize)
+        assertEquals("Autosizemax value must change", 100, textView.autoSizeMaxTextSize)
 
         mutableAutoSizeMax.value = null
 
-        assertEquals("Autolink value must change", 2000, textView.autoSizeMaxTextSize)
+        assertEquals("Autosizemax value must change", 2000, textView.autoSizeMaxTextSize)
     }
 
     @Test

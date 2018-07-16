@@ -1,5 +1,7 @@
 $dokka.format:gfm
 $dokka.linkExtension:md
 $dokka.location:net.gahfy.livebinders.extension$parentActivity#android.view.Viewnet.gahfy.livebinders.extension/android.view.-view/parent-activity.md
+$dokka.location:net.gahfy.livebinders.extension$setMutableAutoLinkMask(android.widget.TextView, androidx.lifecycle.MutableLiveData((kotlin.Int)))net.gahfy.livebinders.extension/android.widget.-text-view/set-mutable-auto-link-mask.md
+$dokka.location:net.gahfy.livebinders.extension$setMutableAutoSizeMaxTextSize(android.widget.TextView, androidx.lifecycle.MutableLiveData((kotlin.Int)))net.gahfy.livebinders.extension/android.widget.-text-view/set-mutable-auto-size-max-text-size.md
 net.gahfy.livebinders.databinding
 net.gahfy.livebinders.extension

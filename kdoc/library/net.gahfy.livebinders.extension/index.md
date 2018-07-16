@@ -9,3 +9,4 @@ Contains extension functions and properties
 | Name | Summary |
 |---|---|
 | [android.view.View](android.view.-view/index.md) |  |
+| [android.widget.TextView](android.widget.-text-view/index.md) |  |
