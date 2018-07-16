@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/gahfy/livebinders.svg)](https://travis-ci.org/gahfy/livebinders)
+[![Codecov](https://codecov.io/github/gahfy/livebinders/coverage.svg)](https://codecov.io/gh/gahfy/livebinders)
+
 # LiveBinders Library
 
 [Read Doc](kdoc/library/index.md)
