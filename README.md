@@ -1,5 +1,7 @@
 # LiveBinders Library
 
+[Read Doc](kdoc/library/index.md)
+
 *This library is currently in development*
 
 The goal of this library is to provide `@BindingAdapter` methods, and extension methods, in order to allow setting:
