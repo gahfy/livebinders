@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">LiveBinders</string>
+
+    <string name="autolink_title">app:mutableAutoLink</string>
+    <string name="coords">My email address is gaetan.hfy@gmail.com.\nMy phone number is +66 63 140 3118\nMy website is https://medium.com/@Gahfy</string>
+    <string name="autolink_none">None</string>
+    <string name="autolink_phone_number">Phone</string>
+    <string name="autolink_email_address">Email</string>
+    <string name="autolink_web_urls">URL</string>
+    <string name="autolink_all">All</string>
+
+    <string name="auto_maxsize_title">app:mutableAutoSizeMaxTextSize</string>
+    <string name="mynameis">My name is Gahfy</string>
+    <string name="max_text_size_200">Max size: 200sp</string>
+    <string name="max_text_size_10">Max size: 10sp</string>
+</resources>
