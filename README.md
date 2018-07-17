@@ -3,7 +3,9 @@
 
 # LiveBinders Library
 
-[Read Doc](kdoc/library/index.md)
+[Read Doc](doc/index.md)
+
+[Read KDoc](kdoc/library/index.md)
 
 *This library is currently in development*
 
