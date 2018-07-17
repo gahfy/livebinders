@@ -1,12 +1,12 @@
 package net.gahfy.livebinders.extension
 
-import android.os.Build
 import android.text.util.Linkify
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import net.gahfy.livebinders.databinding.setMutableAutoLinkMask
 import net.gahfy.livebinders.databinding.setMutableAutoSizeMaxTextSize
+import net.gahfy.livebinders.databinding.setMutableAutoSizeMinTextSize
+import net.gahfy.livebinders.databinding.setMutableAutoSizePresetSizes
 
 /**
  * Sets the mutable autolink mask of the text. See [Linkify.ALL] and peers for possible
@@ -23,7 +23,22 @@ fun TextView.setMutableAutoLinkMask(mask: MutableLiveData<Int>?){
     setMutableAutoLinkMask(this, mask)
 }
 
-        /**
+/**
+ * Specifies the mutable min text size when sizing the text automatically using
+ * [TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM] scaling.
+ *
+ * By using this parameter, the scale type will be set to [TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM].
+ *
+ * __Related XML attribute:__ app:mutableAutoSizeMinTextSize
+ * @param size the mutable min scaling text size. If the value is null, then 1 will be set.
+ * @throws IllegalArgumentException if the value of size is equal or lower than 0
+ * @see TextView.setAutoSizeTextTypeUniformWithConfiguration
+ */
+fun TextView.setMutableAutoSizeMinTextSize(size: MutableLiveData<Int>?) {
+    setMutableAutoSizeMinTextSize(this, size)
+}
+
+/**
  * Specifies the mutable max text size when sizing the text automatically using
  * [TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM] scaling.
  *
@@ -31,10 +46,24 @@ fun TextView.setMutableAutoLinkMask(mask: MutableLiveData<Int>?){
  *
  * __Related XML attribute:__ app:mutableAutoSizeMaxTextSize
  * @param size the mutable max scaling text size. If the value is null, then 2000 will be set.
- * @throws IllegalArgumentException if the value of [size] is equal or lower than 0
+ * @throws IllegalArgumentException if the value of size is equal or lower than 0
  * @see TextView.setAutoSizeTextTypeUniformWithConfiguration
  */
-@RequiresApi(Build.VERSION_CODES.O)
 fun TextView.setMutableAutoSizeMaxTextSize(size:MutableLiveData<Int>?){
     setMutableAutoSizeMaxTextSize(this, size)
 }
+
+/**
+ * Specifies the mutable preset sizes (in pixels) when sizing the text automatically using
+ * [TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM] scaling.
+ *
+ * By using this parameter, the scale type will be set to [TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM].
+ *
+ * __Related XML attribute:__ app:mutableAutoSizePresetSizes
+ * @param sizes a mutable int array of sizes in pixels.
+ * @see TextView.setAutoSizeTextTypeUniformWithPresetSizes
+ */
+fun TextView.setMutableAutoSizeTextTypeUniformWithPresetSizes(sizes: MutableLiveData<IntArray>?) {
+    setMutableAutoSizePresetSizes(this, sizes)
+}
+

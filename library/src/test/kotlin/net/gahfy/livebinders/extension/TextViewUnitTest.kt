@@ -1,17 +1,18 @@
 package net.gahfy.livebinders.extension
 
+import android.os.Build
 import android.text.util.Linkify
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
-import net.gahfy.livebinders.databinding.setMutableAutoLinkMask
-import net.gahfy.livebinders.databinding.setMutableAutoSizeMaxTextSize
 import net.gahfy.livebinders.testutils.mockTextView
 import net.gahfy.livebinders.testutils.resetTextView
+import net.gahfy.livebinders.testutils.setFinalStatic
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
+
 
 class TextViewUnitTest{
     @get:Rule
@@ -19,6 +20,7 @@ class TextViewUnitTest{
 
     @Before
     fun setUp(){
+        setFinalStatic(Build.VERSION::class.java.getField("SDK_INT"), 28)
         resetTextView()
     }
 
@@ -35,6 +37,18 @@ class TextViewUnitTest{
     }
 
     @Test
+    fun textview_setautosizemin() {
+        val textView = mockTextView
+
+        val mutableAutoSizeMin = MutableLiveData<Int>()
+
+        textView.setMutableAutoSizeMinTextSize(mutableAutoSizeMin)
+        mutableAutoSizeMin.value = 100
+
+        Assert.assertEquals("Autosizemin value must change", 100, textView.autoSizeMinTextSize)
+    }
+
+    @Test
     fun textview_setautosizemax() {
         val textView = mockTextView
 
@@ -44,5 +58,19 @@ class TextViewUnitTest{
         mutableAutoSizeMax.value = 100
 
         Assert.assertEquals("Autosizemax value must change", 100, textView.autoSizeMaxTextSize)
+    }
+
+    @Test
+    fun textview_setautosizepresets() {
+        val textView = mockTextView
+
+        val mutableAutoSizePresets = MutableLiveData<IntArray>()
+
+        textView.setMutableAutoSizeTextTypeUniformWithPresetSizes(mutableAutoSizePresets)
+        mutableAutoSizePresets.value = intArrayOf(1, 2, 3)
+
+        Assert.assertEquals("Autosizepresets value must change", 1, textView.autoSizeTextAvailableSizes[0])
+        Assert.assertEquals("Autosizepresets value must change", 2, textView.autoSizeTextAvailableSizes[1])
+        Assert.assertEquals("Autosizepresets value must change", 3, textView.autoSizeTextAvailableSizes[2])
     }
 }

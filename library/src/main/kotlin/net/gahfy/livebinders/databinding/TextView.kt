@@ -1,12 +1,10 @@
 package net.gahfy.livebinders.databinding
 
-import android.os.Build
 import android.text.util.Linkify
-import android.util.Log
 import android.util.TypedValue
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.TextViewCompat
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -38,7 +36,35 @@ fun setMutableAutoLinkMask(textView: TextView, mask: MutableLiveData<Int>?){
 }
 
 /**
- * Specifies the mutable max text size when sizing the text automatically using
+ * Specifies the mutable min text size (in pixels) when sizing the text automatically using
+ * [TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM] scaling.
+ *
+ * By using this parameter, the scale type will be set to [TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM].
+ *
+ * __Related XML attribute:__ app:mutableAutoSizeMinTextSize
+ * @param textView the TextView on which to apply the mutable min scaling text size.
+ * @param size the mutable min scaling text size. If the value is null, then 1 will be set.
+ * @throws IllegalArgumentException if the value of size is equal or lower than 0
+ * @see TextView.setAutoSizeTextTypeUniformWithConfiguration
+ */
+@BindingAdapter("mutableAutoSizeMinTextSize")
+fun setMutableAutoSizeMinTextSize(textView: TextView, size: MutableLiveData<Int>?) {
+    val parentActivity: AppCompatActivity? = textView.parentActivity
+    if (parentActivity != null && size != null) {
+        size.observe(parentActivity, Observer { value ->
+            TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
+                    textView,
+                    value ?: 1,
+                    if (TextViewCompat.getAutoSizeMaxTextSize(textView) == -1) 2000 else TextViewCompat.getAutoSizeMaxTextSize(textView),
+                    if (TextViewCompat.getAutoSizeStepGranularity(textView) == -1) 1 else TextViewCompat.getAutoSizeStepGranularity(textView),
+                    TypedValue.COMPLEX_UNIT_PX
+            )
+        })
+    }
+}
+
+/**
+ * Specifies the mutable max text size (in pixels) when sizing the text automatically using
  * [TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM] scaling.
  *
  * By using this parameter, the scale type will be set to [TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM].
@@ -46,20 +72,49 @@ fun setMutableAutoLinkMask(textView: TextView, mask: MutableLiveData<Int>?){
  * __Related XML attribute:__ app:mutableAutoSizeMaxTextSize
  * @param textView the TextView on which to apply the mutable max scaling text size.
  * @param size the mutable max scaling text size. If the value is null, then 2000 will be set.
- * @throws IllegalArgumentException if the value of [size] is equal or lower than 0
+ * @throws IllegalArgumentException if the value of size is equal or lower than 0
  * @see TextView.setAutoSizeTextTypeUniformWithConfiguration
  */
-@RequiresApi(Build.VERSION_CODES.O)
 @BindingAdapter("mutableAutoSizeMaxTextSize")
 fun setMutableAutoSizeMaxTextSize(textView: TextView, size:MutableLiveData<Int>?){
     val parentActivity: AppCompatActivity? = textView.parentActivity
     if(parentActivity != null && size != null) {
-        size.observe(parentActivity, Observer { value -> textView.setAutoSizeTextTypeUniformWithConfiguration(
-                if (textView.autoSizeMinTextSize == -1) 1 else textView.autoSizeMinTextSize,
+        size.observe(parentActivity, Observer { value ->
+            TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
+                    textView,
+                    if (TextViewCompat.getAutoSizeMinTextSize(textView) == -1) 1 else TextViewCompat.getAutoSizeMinTextSize(textView),
                 value?:2000,
-                if (textView.autoSizeStepGranularity == -1) 1 else textView.autoSizeStepGranularity,
+                    if (TextViewCompat.getAutoSizeStepGranularity(textView) == -1) 1 else TextViewCompat.getAutoSizeStepGranularity(textView),
                 TypedValue.COMPLEX_UNIT_PX
         )})
     }
 }
+
+/**
+ * Specifies the mutable preset sizes (in pixels) when sizing the text automatically using
+ * [TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM] scaling.
+ *
+ * By using this parameter, the scale type will be set to [TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM].
+ *
+ * __Related XML attribute:__ app:mutableAutoSizePresetSizes
+ * @param textView the TextView on which to apply the mutable preset sizes.
+ * @param sizes a mutable int array of sizes in pixels.
+ * @see TextView.setAutoSizeTextTypeUniformWithPresetSizes
+ */
+@BindingAdapter("mutableAutoSizePresetSizes")
+fun setMutableAutoSizePresetSizes(textView: TextView, sizes: MutableLiveData<IntArray>?) {
+    val parentActivity: AppCompatActivity? = textView.parentActivity
+    if (parentActivity != null && sizes != null) {
+        sizes.observe(parentActivity, Observer { value ->
+            if (value != null) {
+                TextViewCompat.setAutoSizeTextTypeUniformWithPresetSizes(
+                        textView,
+                        value,
+                        TypedValue.COMPLEX_UNIT_PX
+                )
+            }
+        })
+    }
+}
+
 

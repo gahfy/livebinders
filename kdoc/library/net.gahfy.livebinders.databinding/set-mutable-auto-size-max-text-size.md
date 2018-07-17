@@ -4,7 +4,7 @@
 
 `fun setMutableAutoSizeMaxTextSize(textView: `[`TextView`](https://developer.android.com/reference/android/widget/TextView.html)`, size: MutableLiveData<`[`Int`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)`>?): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)
 
-Specifies the mutable max text size when sizing the text automatically using
+Specifies the mutable max text size (in pixels) when sizing the text automatically using
 [TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM](https://developer.android.com/reference/android/widget/TextView.html#AUTO_SIZE_TEXT_TYPE_UNIFORM) scaling.
 
 By using this parameter, the scale type will be set to [TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM](https://developer.android.com/reference/android/widget/TextView.html#AUTO_SIZE_TEXT_TYPE_UNIFORM).
@@ -19,7 +19,7 @@ By using this parameter, the scale type will be set to [TextView.AUTO_SIZE_TEXT_
 
 ### Exceptions
 
-`IllegalArgumentException` - if the value of [size](set-mutable-auto-size-max-text-size.md#net.gahfy.livebinders.databinding$setMutableAutoSizeMaxTextSize(android.widget.TextView, androidx.lifecycle.MutableLiveData((kotlin.Int)))/size) is equal or lower than 0
+`IllegalArgumentException` - if the value of size is equal or lower than 0
 
 **See Also**
 

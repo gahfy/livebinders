@@ -5,12 +5,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleRegistry
 import org.mockito.ArgumentMatchers
+import org.mockito.ArgumentMatchers.any
+import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 
 private var autoLinkValue = 0
 private var autoSizeMax = -1
 private var autoSizeMin = -1
 private var autoSizeGranularity = -1
+private var autoSizePresets = intArrayOf()
 
 
 fun resetTextView(){
@@ -22,29 +26,36 @@ val mockTextView:TextView
         val parentActivity = Mockito.mock(AppCompatActivity::class.java)
         val textView = Mockito.mock(TextView::class.java)
 
-        Mockito.`when`(textView.context).thenReturn(parentActivity)
-        Mockito.`when`(textView.text).thenReturn("test")
+        `when`(textView.context).thenReturn(parentActivity)
+        `when`(textView.text).thenReturn("test")
 
         // Autolink
-        Mockito.`when`(textView.setAutoLinkMask(ArgumentMatchers.anyInt())).thenAnswer { invocation ->
+        `when`(textView.setAutoLinkMask(ArgumentMatchers.anyInt())).thenAnswer { invocation ->
             autoLinkValue = invocation.arguments[0] as Int
             null
         }
-        Mockito.`when`(textView.autoLinkMask).thenAnswer { autoLinkValue }
+        `when`(textView.autoLinkMask).thenAnswer { autoLinkValue }
 
-        // Autosize
-        Mockito.`when`(textView.setAutoSizeTextTypeUniformWithConfiguration(ArgumentMatchers.anyInt(), ArgumentMatchers.anyInt(), ArgumentMatchers.anyInt(), ArgumentMatchers.anyInt())).thenAnswer { invocation ->
+        // Autosize min max granularity
+        `when`(textView.setAutoSizeTextTypeUniformWithConfiguration(anyInt(), anyInt(), anyInt(), anyInt())).thenAnswer { invocation ->
             autoSizeMin = invocation.arguments[0] as Int
             autoSizeMax = invocation.arguments[1] as Int
             autoSizeGranularity = invocation.arguments[2] as Int
             null
         }
-        Mockito.`when`(textView.autoSizeMinTextSize).thenAnswer { autoSizeMin }
-        Mockito.`when`(textView.autoSizeMaxTextSize).thenAnswer { autoSizeMax }
-        Mockito.`when`(textView.autoSizeStepGranularity).thenAnswer { autoSizeGranularity }
+        `when`(textView.autoSizeMinTextSize).thenAnswer { autoSizeMin }
+        `when`(textView.autoSizeMaxTextSize).thenAnswer { autoSizeMax }
+        `when`(textView.autoSizeStepGranularity).thenAnswer { autoSizeGranularity }
+
+        // Autosize presets
+        `when`(textView.setAutoSizeTextTypeUniformWithPresetSizes(any(IntArray::class.java), anyInt())).thenAnswer { invocation ->
+            autoSizePresets = invocation.arguments[0] as IntArray
+            null
+        }
+        `when`(textView.autoSizeTextAvailableSizes).thenAnswer { autoSizePresets }
 
         val lifecycle = LifecycleRegistry(parentActivity)
-        Mockito.`when`(parentActivity.lifecycle).thenReturn(lifecycle)
+        `when`(parentActivity.lifecycle).thenReturn(lifecycle)
         lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
 
         return textView
