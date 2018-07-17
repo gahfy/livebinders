@@ -15,10 +15,16 @@ private var autoSizeMax = -1
 private var autoSizeMin = -1
 private var autoSizeGranularity = -1
 private var autoSizePresets = intArrayOf()
+private var autoSizeTextType = 0
 
 
 fun resetTextView(){
     autoLinkValue = 0
+    autoSizeMax = -1
+    autoSizeMin = -1
+    autoSizeGranularity = -1
+    autoSizePresets = intArrayOf()
+    autoSizeTextType = 0
 }
 
 val mockTextView:TextView
@@ -53,6 +59,13 @@ val mockTextView:TextView
             null
         }
         `when`(textView.autoSizeTextAvailableSizes).thenAnswer { autoSizePresets }
+
+        // Autosize text type
+        `when`(textView.setAutoSizeTextTypeWithDefaults(ArgumentMatchers.anyInt())).thenAnswer { invocation ->
+            autoSizeTextType = invocation.arguments[0] as Int
+            null
+        }
+        `when`(textView.autoSizeTextType).thenAnswer { autoSizeTextType }
 
         val lifecycle = LifecycleRegistry(parentActivity)
         `when`(parentActivity.lifecycle).thenReturn(lifecycle)

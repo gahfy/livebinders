@@ -10,6 +10,8 @@
 | **app:mutableAutoSizeMaxTextSize** | Mutable version of [**android:autoSizeMaxTextSize**](https://developer.android.com/reference/android/widget/TextView.html#attr_android:autoSizeMaxTextSize) | `MutableLiveData<Int>` |
 | **app:mutableAutoSizeMinTextSize** | Mutable version of [**android:autoSizeMinTextSize**](https://developer.android.com/reference/android/widget/TextView.html#attr_android:autoSizeMinTextSize) | `MutableLiveData<Int>` |
 | **app:mutableAutoSizePresetSizes** | Mutable version of [**android:autoSizePresetSizes**](https://developer.android.com/reference/android/widget/TextView.html#attr_android:autoSizePresetSizes) | `MutableLiveData<Int>` |
+| **app:mutableAutoSizeStepGranularity** | Mutable version of [**android:autoSizeStepGranularity**](https://developer.android.com/reference/android/widget/TextView.html#attr_android:autoSizeStepGranularity) | `MutableLiveData<Int>` |
+| **app:mutableAutoSizeTextType** | Mutable version of [**android:autoSizeTextType**](https://developer.android.com/reference/android/widget/TextView.html#attr_android:autoSizeTextType) | `MutableLiveData<Int>` |
 
 ### Extension Functions
 
@@ -19,6 +21,10 @@
 | **setMutableAutoSizeMinTextSize(size: [MutableLiveData](https://developer.android.com/reference/android/arch/lifecycle/MutableLiveData)&lt;[Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)&gt;?) : [Unit](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)**<br><br>Specifies the mutable min text size when sizing the text automatically using [TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM](https://developer.android.com/reference/android/widget/TextView.html#AUTO_SIZE_TEXT_TYPE_UNIFORM) scaling. |
 | **setMutableAutoSizeMaxTextSize(size: [MutableLiveData](https://developer.android.com/reference/android/arch/lifecycle/MutableLiveData)&lt;[Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)&gt;?) : [Unit](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)**<br><br>Specifies the mutable max text size when sizing the text automatically using [TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM](https://developer.android.com/reference/android/widget/TextView.html#AUTO_SIZE_TEXT_TYPE_UNIFORM) scaling. |
 | **setMutableAutoSizeTextTypeUniformWithPresetSizes(sizes: [MutableLiveData](https://developer.android.com/reference/android/arch/lifecycle/MutableLiveData)&lt;[IntArray](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int-array/index.html)&gt;?) : [Unit](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)**<br><br>Specifies the mutable preset sizes (in pixels) when sizing the text automatically using [TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM](https://developer.android.com/reference/android/widget/TextView.html#AUTO_SIZE_TEXT_TYPE_UNIFORM) scaling. |
+| **setMutableAutoSizeStepGranularity(granularity: [MutableLiveData](https://developer.android.com/reference/android/arch/lifecycle/MutableLiveData)&lt;[Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)&gt;?) : [Unit](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)**<br><br>Specifies the auto-size step size (in pixels). Overwrites autoSizePresetSizes if set. |
+| **setMutableAutoSizeTextTypeWithDefaults(autoSizeTextType: [MutableLiveData](https://developer.android.com/reference/android/arch/lifecycle/MutableLiveData)&lt;[Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)&gt;?) : [Unit](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)**<br><br>Specifies a mutable text scaling type, `TextViewCompat.AUTO_SIZE_TEXT_TYPE_NONE` or
+`TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM` |
+
 
 ## Extension Functions
 
@@ -82,3 +88,26 @@ By using this parameter, the scale type will be set to [TextView.AUTO_SIZE_TEXT_
 #### Parameters
 
 `sizes` - a mutable int array of sizes in pixels.
+
+### setMutableAutoSizeStepGranularity(granularity: [MutableLiveData](https://developer.android.com/reference/android/arch/lifecycle/MutableLiveData)&lt;[Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)&gt;?) : [Unit](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)
+
+Specifies the auto-size step size (in pixels). Overwrites autoSizePresetSizes if set.
+
+By using this parameter, the scale type will be set to [TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM](https://developer.android.com/reference/android/widget/TextView.html#AUTO_SIZE_TEXT_TYPE_UNIFORM).
+
+**Related XML attribute:** app:mutableAutoSizeStepGranularity
+
+### Parameters
+
+`granularity` - the mutable auto-step size.
+
+### setMutableAutoSizeTextTypeWithDefaults(autoSizeTextType: [MutableLiveData](https://developer.android.com/reference/android/arch/lifecycle/MutableLiveData)&lt;[Int](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html)&gt;?) : [Unit](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)
+
+Specifies a mutable text scaling type, `TextViewCompat.AUTO_SIZE_TEXT_TYPE_NONE` or
+`TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM`
+
+**Related XML attribute:** app:mutableAutoSizeTextType
+
+### Parameters
+
+`autoSizeTextType` - the mutable text type

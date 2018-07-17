@@ -73,4 +73,28 @@ class TextViewUnitTest{
         Assert.assertEquals("Autosizepresets value must change", 2, textView.autoSizeTextAvailableSizes[1])
         Assert.assertEquals("Autosizepresets value must change", 3, textView.autoSizeTextAvailableSizes[2])
     }
+
+    @Test
+    fun textview_setautosizegranularity() {
+        val textView = mockTextView
+
+        val mutableGranularity = MutableLiveData<Int>()
+
+        textView.setMutableAutoSizeStepGranularity(mutableGranularity)
+        mutableGranularity.value = 100
+
+        Assert.assertEquals("Autosizemax value must change", 100, textView.autoSizeStepGranularity)
+    }
+
+    @Test
+    fun textview_setautosizetexttype() {
+        val textView = mockTextView
+
+        val mutableTextType = MutableLiveData<Int>()
+
+        textView.setMutableAutoSizeTextTypeWithDefaults(mutableTextType)
+        mutableTextType.value = 1
+
+        Assert.assertEquals("Autosizemax value must change", 1, textView.autoSizeTextType)
+    }
 }

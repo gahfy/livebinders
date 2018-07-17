@@ -4,6 +4,8 @@ $dokka.location:net.gahfy.livebinders.extension$parentActivity#android.view.View
 $dokka.location:net.gahfy.livebinders.extension$setMutableAutoLinkMask(android.widget.TextView, androidx.lifecycle.MutableLiveData((kotlin.Int)))net.gahfy.livebinders.extension/android.widget.-text-view/set-mutable-auto-link-mask.md
 $dokka.location:net.gahfy.livebinders.extension$setMutableAutoSizeMaxTextSize(android.widget.TextView, androidx.lifecycle.MutableLiveData((kotlin.Int)))net.gahfy.livebinders.extension/android.widget.-text-view/set-mutable-auto-size-max-text-size.md
 $dokka.location:net.gahfy.livebinders.extension$setMutableAutoSizeMinTextSize(android.widget.TextView, androidx.lifecycle.MutableLiveData((kotlin.Int)))net.gahfy.livebinders.extension/android.widget.-text-view/set-mutable-auto-size-min-text-size.md
+$dokka.location:net.gahfy.livebinders.extension$setMutableAutoSizeStepGranularity(android.widget.TextView, androidx.lifecycle.MutableLiveData((kotlin.Int)))net.gahfy.livebinders.extension/android.widget.-text-view/set-mutable-auto-size-step-granularity.md
 $dokka.location:net.gahfy.livebinders.extension$setMutableAutoSizeTextTypeUniformWithPresetSizes(android.widget.TextView, androidx.lifecycle.MutableLiveData((kotlin.IntArray)))net.gahfy.livebinders.extension/android.widget.-text-view/set-mutable-auto-size-text-type-uniform-with-preset-sizes.md
+$dokka.location:net.gahfy.livebinders.extension$setMutableAutoSizeTextTypeWithDefaults(android.widget.TextView, androidx.lifecycle.MutableLiveData((kotlin.Int)))net.gahfy.livebinders.extension/android.widget.-text-view/set-mutable-auto-size-text-type-with-defaults.md
 net.gahfy.livebinders.databinding
 net.gahfy.livebinders.extension

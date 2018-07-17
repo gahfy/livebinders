@@ -54,9 +54,9 @@ fun setMutableAutoSizeMinTextSize(textView: TextView, size: MutableLiveData<Int>
         size.observe(parentActivity, Observer { value ->
             TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
                     textView,
-                    value ?: 1,
-                    if (TextViewCompat.getAutoSizeMaxTextSize(textView) == -1) 2000 else TextViewCompat.getAutoSizeMaxTextSize(textView),
-                    if (TextViewCompat.getAutoSizeStepGranularity(textView) == -1) 1 else TextViewCompat.getAutoSizeStepGranularity(textView),
+                    getSettableAutoSizeMinTextSize(value),
+                    getSettableAutoSizeMaxTextSize(TextViewCompat.getAutoSizeMaxTextSize(textView)),
+                    getSettableAutoSizeGranularity(TextViewCompat.getAutoSizeStepGranularity(textView)),
                     TypedValue.COMPLEX_UNIT_PX
             )
         })
@@ -82,9 +82,9 @@ fun setMutableAutoSizeMaxTextSize(textView: TextView, size:MutableLiveData<Int>?
         size.observe(parentActivity, Observer { value ->
             TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
                     textView,
-                    if (TextViewCompat.getAutoSizeMinTextSize(textView) == -1) 1 else TextViewCompat.getAutoSizeMinTextSize(textView),
-                value?:2000,
-                    if (TextViewCompat.getAutoSizeStepGranularity(textView) == -1) 1 else TextViewCompat.getAutoSizeStepGranularity(textView),
+                    getSettableAutoSizeMinTextSize(TextViewCompat.getAutoSizeMinTextSize(textView)),
+                    getSettableAutoSizeMaxTextSize(value),
+                    getSettableAutoSizeGranularity(TextViewCompat.getAutoSizeStepGranularity(textView)),
                 TypedValue.COMPLEX_UNIT_PX
         )})
     }
@@ -116,5 +116,89 @@ fun setMutableAutoSizePresetSizes(textView: TextView, sizes: MutableLiveData<Int
         })
     }
 }
+
+/**
+ * Specifies the auto-size step size (in pixels). Overwrites autoSizePresetSizes if set.
+ *
+ * By using this parameter, the scale type will be set to [TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM].
+ *
+ * __Related XML attribute:__ app:mutableAutoSizeStepGranularity
+ * @param textView the TextView on which to apply the mutable preset sizes.
+ * @param granularity the mutable auto-step size.
+ * @see TextView.setAutoSizeTextTypeUniformWithConfiguration
+ */
+@BindingAdapter("mutableAutoSizeStepGranularity")
+fun setMutableAutoSizeStepGranularity(textView: TextView, granularity: MutableLiveData<Int>?) {
+    val parentActivity: AppCompatActivity? = textView.parentActivity
+    if (parentActivity != null && granularity != null) {
+        granularity.observe(parentActivity, Observer { value ->
+            TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
+                    textView,
+                    getSettableAutoSizeMinTextSize(TextViewCompat.getAutoSizeMinTextSize(textView)),
+                    getSettableAutoSizeMaxTextSize(TextViewCompat.getAutoSizeMaxTextSize(textView)),
+                    getSettableAutoSizeGranularity(value),
+                    TypedValue.COMPLEX_UNIT_PX
+            )
+        })
+    }
+}
+
+/**
+ * Specifies a mutable text scaling type, [TextViewCompat.AUTO_SIZE_TEXT_TYPE_NONE] or
+ * [TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM]
+ *
+ * __Related XML attribute:__ app:mutableAutoSizeTextType
+ * @param textView the TextView on which to apply the mutable preset sizes.
+ * @param textType the mutable text type
+ */
+@BindingAdapter("mutableAutoSizeTextType")
+fun setMutableAutoSizeTextType(textView: TextView, textType: MutableLiveData<Int>?) {
+    val parentActivity: AppCompatActivity? = textView.parentActivity
+    if (parentActivity != null && textType != null) {
+        textType.observe(parentActivity, Observer { value ->
+            TextViewCompat.setAutoSizeTextTypeWithDefaults(
+                    textView,
+                    getSettableAutoSizeTextType(value)
+            )
+        })
+    }
+}
+
+/**
+ * Returns a settable auto size min text size value from a value which may be not correct.
+ *
+ * Will return 1 if value is not correct
+ * @param size the value to set, whatever it is
+ * @return a settable auto size min text size value from a value which may be not correct
+ */
+private fun getSettableAutoSizeMinTextSize(size: Int?): Int = if (size == null || size <= 1) 1 else size
+
+/**
+ * Returns a settable auto size max text size value from a value which may be not correct.
+ *
+ * Will return 2000 if value is not correct
+ * @param size the value to set, whatever it is
+ * @return a settable auto size max text size value from a value which may be not correct
+ */
+private fun getSettableAutoSizeMaxTextSize(size: Int?): Int = if (size == null || size < 1) 2000 else size
+
+/**
+ * Returns a settable granularity value from a value which may be not correct.
+ *
+ * Will return 1 if value is not correct
+ * @param granularity the value to set, whatever it is
+ * @return a settable granularity value from a value which may be not correct
+ */
+private fun getSettableAutoSizeGranularity(granularity: Int?): Int = if (granularity == null || granularity <= 1) 1 else granularity
+
+/**
+ * Returns a settable auto size text type value from a value which may be not correct.
+ *
+ * Will return 1 if value is not correct
+ * @param textType the value to set, whatever it is
+ * @return a settable auto size text type value from a value which may be not correct
+ */
+private fun getSettableAutoSizeTextType(textType: Int?): Int = if (textType == TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM) TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM else TextViewCompat.AUTO_SIZE_TEXT_TYPE_NONE
+
 
 

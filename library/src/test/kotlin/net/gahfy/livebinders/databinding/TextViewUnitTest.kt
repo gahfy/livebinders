@@ -228,4 +228,110 @@ class TextViewUnitTest {
         setMutableAutoSizePresetSizes(textView, mutableAutoSizePresets)
         mutableAutoSizePresets?.value = intArrayOf(1, 2, 3)
     }
+
+    @Test
+    fun textview_mutableautosizegranularity_nonnull() {
+        val textView = mockTextView
+
+        val mutableAutoSizeGranularity = MutableLiveData<Int>()
+
+        setMutableAutoSizeStepGranularity(textView, mutableAutoSizeGranularity)
+        mutableAutoSizeGranularity.value = 100
+
+        assertEquals("Autosizegranularity value must change", 100, textView.autoSizeStepGranularity)
+
+        mutableAutoSizeGranularity.value = null
+
+        assertEquals("Autosizegranularity value must change", 1, textView.autoSizeStepGranularity)
+    }
+
+    @Test
+    fun textview_mutableautosizegranularity_nullparentactivity() {
+        // Assert no exception
+        val textView = mock(TextView::class.java)
+        `when`(textView.context).thenReturn(mock(Context::class.java))
+
+        val mutableAutoSizeGranularity = MutableLiveData<Int>()
+
+        setMutableAutoSizeStepGranularity(textView, mutableAutoSizeGranularity)
+        mutableAutoSizeGranularity.value = 100
+    }
+
+    @Test
+    fun textview_mutableautosizegranularity_nullautosizegranularity() {
+        // Assert no exception
+        val textView = mockTextView
+
+        val mutableAutoSizeGranularity: MutableLiveData<Int>? = null
+
+        setMutableAutoSizeStepGranularity(textView, mutableAutoSizeGranularity)
+        mutableAutoSizeGranularity?.value = 100
+    }
+
+    @Test
+    fun textview_mutableautosizegranularity_nullautosizegranularityandactivity() {
+        // Assert no exception
+        val textView = mock(TextView::class.java)
+        `when`(textView.context).thenReturn(mock(Context::class.java))
+
+        val mutableAutoSizeGranularity: MutableLiveData<Int>? = null
+
+        setMutableAutoSizeStepGranularity(textView, mutableAutoSizeGranularity)
+        mutableAutoSizeGranularity?.value = 100
+    }
+
+    @Test
+    fun textview_mutableautosizetexttype_nonnull() {
+        val textView = mockTextView
+
+        val mutableAutoSizeTextType = MutableLiveData<Int>()
+
+        setMutableAutoSizeTextType(textView, mutableAutoSizeTextType)
+        mutableAutoSizeTextType.value = 1
+
+        assertEquals("Auto size text type value must change", 1, textView.autoSizeTextType)
+
+        mutableAutoSizeTextType.value = 100
+
+        assertEquals("Auto size text type value must change", 0, textView.autoSizeTextType)
+
+        mutableAutoSizeTextType.value = null
+
+        assertEquals("Auto size text type value must change", 0, textView.autoSizeTextType)
+    }
+
+    @Test
+    fun textview_mutableautosizetexttype_nullparentactivity() {
+        // Assert no exception
+        val textView = mock(TextView::class.java)
+        `when`(textView.context).thenReturn(mock(Context::class.java))
+
+        val mutableAutoSizeTextType = MutableLiveData<Int>()
+
+        setMutableAutoSizeTextType(textView, mutableAutoSizeTextType)
+        mutableAutoSizeTextType.value = 1
+    }
+
+    @Test
+    fun textview_mutableautosizetexttype_nullautosizetexttype() {
+        // Assert no exception
+        val textView = mockTextView
+
+        val mutableAutoSizeTextType: MutableLiveData<Int>? = null
+
+        setMutableAutoSizeTextType(textView, mutableAutoSizeTextType)
+        mutableAutoSizeTextType?.value = 1
+    }
+
+    @Test
+    fun textview_mutableautosizetexttype_nullautosizetexttypeandactivity() {
+        // Assert no exception
+        val textView = mock(TextView::class.java)
+        `when`(textView.context).thenReturn(mock(Context::class.java))
+
+        val mutableAutoSizeTextType: MutableLiveData<Int>? = null
+
+        setMutableAutoSizeTextType(textView, mutableAutoSizeTextType)
+        mutableAutoSizeTextType?.value = 100
+    }
 }
