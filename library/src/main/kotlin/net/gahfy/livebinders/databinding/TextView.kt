@@ -7,6 +7,7 @@ import android.text.Layout
 import android.text.method.TextKeyListener
 import android.text.util.Linkify
 import android.util.TypedValue
+import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.TextViewCompat
@@ -244,27 +245,38 @@ internal fun setMutableCapitalize(textView: TextView, capitalize: MutableLiveDat
 }
 
 private fun setAutoCorrect(textView: TextView, autoCorrect: Boolean?) {
+    val capitalize = if (textView.inputType == textView.inputType.or(InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS)) TextKeyListener.Capitalize.CHARACTERS
+    else if (textView.inputType == textView.inputType.or(InputType.TYPE_TEXT_FLAG_CAP_WORDS)) TextKeyListener.Capitalize.WORDS
+    else if (textView.inputType == textView.inputType.or(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES)) TextKeyListener.Capitalize.SENTENCES
+    else TextKeyListener.Capitalize.NONE
+
+    val inputType = EditorInfo.TYPE_CLASS_TEXT
+
     if (autoCorrect == true) {
-        textView.inputType = textView.inputType.or(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT)
+        textView.inputType = inputType.or(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT)
+        textView.keyListener = TextKeyListener.getInstance(autoCorrect, capitalize)
     } else {
-        textView.inputType = textView.inputType.and(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT.inv())
+        textView.inputType = inputType.and(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT.inv())
+        textView.keyListener = TextKeyListener.getInstance(false, capitalize)
     }
 }
 
 private fun setCapitalize(textView: TextView, capitalize: TextKeyListener.Capitalize?) {
+    val isAutoText = textView.inputType == textView.inputType.or(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT)
+
+    val inputType = EditorInfo.TYPE_CLASS_TEXT
+
     // Safe because when avoids 100% coverage
     @Suppress("CascadeIf")
-    textView.inputType = textView.inputType.and(
-            InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS.inv()
-                    .and(InputType.TYPE_TEXT_FLAG_CAP_WORDS.inv())
-                    .and(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES.inv())
-    ).or(
+    textView.inputType = inputType.or(
             if (capitalize == TextKeyListener.Capitalize.SENTENCES) InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
             else if (capitalize == TextKeyListener.Capitalize.WORDS) InputType.TYPE_TEXT_FLAG_CAP_WORDS
             else if (capitalize == TextKeyListener.Capitalize.CHARACTERS) InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
             else if (capitalize == TextKeyListener.Capitalize.NONE) 0
             else 0
-    )
+    ).or(if (isAutoText) InputType.TYPE_TEXT_FLAG_AUTO_CORRECT else 0)
+
+    textView.keyListener = TextKeyListener.getInstance(isAutoText, capitalize)
 }
 
 private fun getSettableAutoSizeMinTextSize(size: Int?): Int = if (size == null || size <= 1) 1 else size

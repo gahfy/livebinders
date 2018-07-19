@@ -347,14 +347,28 @@ class TextViewUnitTest {
         val textView = mockTextView
 
         val mutableAutoText = MutableLiveData<Boolean>()
+        val mutableCapitalize = MutableLiveData<TextKeyListener.Capitalize>()
 
         setMutableAutoText(textView, mutableAutoText)
+        setMutableCapitalize(textView, mutableCapitalize)
+
+        mutableCapitalize.value = TextKeyListener.Capitalize.NONE
         mutableAutoText.value = false
         assertNotEquals("autotext value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT), textView.inputType)
+
+        mutableCapitalize.value = TextKeyListener.Capitalize.SENTENCES
         mutableAutoText.value = true
         assertEquals("autotext value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT), textView.inputType)
+
+        mutableCapitalize.value = TextKeyListener.Capitalize.WORDS
         mutableAutoText.value = null
         assertNotEquals("autotext value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT), textView.inputType)
+
+        // Assert no crash
+        mutableCapitalize.value = TextKeyListener.Capitalize.CHARACTERS
+        mutableAutoText.value = null
+        mutableCapitalize.value = TextKeyListener.Capitalize.NONE
+        mutableAutoText.value = null
     }
 
     @Test
@@ -503,8 +517,12 @@ class TextViewUnitTest {
         val textView = mockTextView
 
         val mutableCapitalize = MutableLiveData<TextKeyListener.Capitalize>()
+        val mutableAutoText = MutableLiveData<Boolean>()
 
         setMutableCapitalize(textView, mutableCapitalize)
+        setMutableAutoText(textView, mutableAutoText)
+
+        mutableAutoText.value = true
         mutableCapitalize.value = TextKeyListener.Capitalize.CHARACTERS
         Assert.assertEquals("capitalize value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS), textView.inputType)
         mutableCapitalize.value = TextKeyListener.Capitalize.NONE
@@ -522,6 +540,7 @@ class TextViewUnitTest {
         Assert.assertNotEquals("capitalize value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_CAP_WORDS), textView.inputType)
         Assert.assertNotEquals("capitalize value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES), textView.inputType)
         // Assert no exception
+        mutableAutoText.value = false
         mutableCapitalize.value = null
     }
 
