@@ -28,7 +28,7 @@ import net.gahfy.livebinders.extension.parentActivity
  * [Linkify.WEB_URLS]
  */
 @BindingAdapter("mutableAutoLink")
-fun setMutableAutoLinkMask(textView: TextView, mask: MutableLiveData<Int>?){
+internal fun setMutableAutoLinkMask(textView: TextView, mask: MutableLiveData<Int>?) {
     val parentActivity: AppCompatActivity? = textView.parentActivity
     if(parentActivity != null && mask != null) {
         mask.observe(parentActivity, Observer {
@@ -52,7 +52,7 @@ fun setMutableAutoLinkMask(textView: TextView, mask: MutableLiveData<Int>?){
  * then 1 will be set.
  */
 @BindingAdapter("mutableAutoSizeMinTextSize")
-fun setMutableAutoSizeMinTextSize(textView: TextView, size: MutableLiveData<Int>?) {
+internal fun setMutableAutoSizeMinTextSize(textView: TextView, size: MutableLiveData<Int>?) {
     val parentActivity: AppCompatActivity? = textView.parentActivity
     if (parentActivity != null && size != null) {
         size.observe(parentActivity, Observer { value ->
@@ -79,7 +79,7 @@ fun setMutableAutoSizeMinTextSize(textView: TextView, size: MutableLiveData<Int>
  * then 2000 will be set.
  */
 @BindingAdapter("mutableAutoSizeMaxTextSize")
-fun setMutableAutoSizeMaxTextSize(textView: TextView, size:MutableLiveData<Int>?){
+internal fun setMutableAutoSizeMaxTextSize(textView: TextView, size: MutableLiveData<Int>?) {
     val parentActivity: AppCompatActivity? = textView.parentActivity
     if(parentActivity != null && size != null) {
         size.observe(parentActivity, Observer { value ->
@@ -104,7 +104,7 @@ fun setMutableAutoSizeMaxTextSize(textView: TextView, size:MutableLiveData<Int>?
  * @param sizes a mutable int array of sizes in pixels to apply to the [TextView]
  */
 @BindingAdapter("mutableAutoSizePresetSizes")
-fun setMutableAutoSizePresetSizes(textView: TextView, sizes: MutableLiveData<IntArray>?) {
+internal fun setMutableAutoSizePresetSizes(textView: TextView, sizes: MutableLiveData<IntArray>?) {
     val parentActivity: AppCompatActivity? = textView.parentActivity
     if (parentActivity != null && sizes != null) {
         sizes.observe(parentActivity, Observer { value ->
@@ -129,7 +129,7 @@ fun setMutableAutoSizePresetSizes(textView: TextView, sizes: MutableLiveData<Int
  * @param granularity the mutable auto-step size to apply to the [TextView]
  */
 @BindingAdapter("mutableAutoSizeStepGranularity")
-fun setMutableAutoSizeStepGranularity(textView: TextView, granularity: MutableLiveData<Int>?) {
+internal fun setMutableAutoSizeStepGranularity(textView: TextView, granularity: MutableLiveData<Int>?) {
     val parentActivity: AppCompatActivity? = textView.parentActivity
     if (parentActivity != null && granularity != null) {
         granularity.observe(parentActivity, Observer { value ->
@@ -153,7 +153,7 @@ fun setMutableAutoSizeStepGranularity(textView: TextView, granularity: MutableLi
  * @param textType the mutable text type to apply to the [TextView]
  */
 @BindingAdapter("mutableAutoSizeTextType")
-fun setMutableAutoSizeTextType(textView: TextView, textType: MutableLiveData<Int>?) {
+internal fun setMutableAutoSizeTextType(textView: TextView, textType: MutableLiveData<Int>?) {
     val parentActivity: AppCompatActivity? = textView.parentActivity
     if (parentActivity != null && textType != null) {
         textType.observe(parentActivity, Observer { value ->
@@ -174,7 +174,7 @@ fun setMutableAutoSizeTextType(textView: TextView, textType: MutableLiveData<Int
  * @param autoText the mutable auto correct to apply on the [TextView]
  */
 @BindingAdapter("mutableAutoText")
-fun setMutableAutoText(textView: TextView, autoText: MutableLiveData<Boolean>?) {
+internal fun setMutableAutoText(textView: TextView, autoText: MutableLiveData<Boolean>?) {
     val parentActivity: AppCompatActivity? = textView.parentActivity
     if (parentActivity != null && autoText != null) {
         autoText.observe(parentActivity, Observer { value ->
@@ -195,7 +195,7 @@ fun setMutableAutoText(textView: TextView, autoText: MutableLiveData<Boolean>?) 
  */
 @BindingAdapter("mutableBreakStrategy")
 @TargetApi(Build.VERSION_CODES.M)
-fun setMutableBreakStrategy(textView: TextView, breakStrategy: MutableLiveData<Int>?) {
+internal fun setMutableBreakStrategy(textView: TextView, breakStrategy: MutableLiveData<Int>?) {
     val parentActivity: AppCompatActivity? = textView.parentActivity
     if (parentActivity != null && breakStrategy != null) {
         breakStrategy.observe(parentActivity, Observer { value ->
@@ -214,7 +214,7 @@ fun setMutableBreakStrategy(textView: TextView, breakStrategy: MutableLiveData<I
  * @param bufferType the mutable type to set to the [TextView]
  */
 @BindingAdapter("mutableBufferType")
-fun setMutableBufferType(textView: TextView, bufferType: MutableLiveData<TextView.BufferType>?) {
+internal fun setMutableBufferType(textView: TextView, bufferType: MutableLiveData<TextView.BufferType>?) {
     val parentActivity: AppCompatActivity? = textView.parentActivity
     if (parentActivity != null && bufferType != null) {
         bufferType.observe(parentActivity, Observer { value ->
@@ -234,7 +234,7 @@ fun setMutableBufferType(textView: TextView, bufferType: MutableLiveData<TextVie
  * @param capitalize the mutable capitalize method to apply on the [TextView]
  */
 @BindingAdapter("mutableCapitalize")
-fun setMutableCapitalize(textView: TextView, capitalize: MutableLiveData<TextKeyListener.Capitalize>?) {
+internal fun setMutableCapitalize(textView: TextView, capitalize: MutableLiveData<TextKeyListener.Capitalize>?) {
     val parentActivity: AppCompatActivity? = textView.parentActivity
     if (parentActivity != null && capitalize != null) {
         capitalize.observe(parentActivity, Observer { value ->
