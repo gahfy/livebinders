@@ -250,13 +250,20 @@ private fun setAutoCorrect(textView: TextView, autoCorrect: Boolean?) {
     else if (textView.inputType == textView.inputType.or(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES)) TextKeyListener.Capitalize.SENTENCES
     else TextKeyListener.Capitalize.NONE
 
+    // Safe because when avoids 100% coverage
+    @Suppress("CascadeIf")
+    val capitalizeInputType = if (capitalize == TextKeyListener.Capitalize.SENTENCES) InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+    else if (capitalize == TextKeyListener.Capitalize.WORDS) InputType.TYPE_TEXT_FLAG_CAP_WORDS
+    else if (capitalize == TextKeyListener.Capitalize.CHARACTERS) InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
+    else 0
+
     val inputType = EditorInfo.TYPE_CLASS_TEXT
 
     if (autoCorrect == true) {
-        textView.inputType = inputType.or(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT)
+        textView.inputType = inputType.or(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT).or(capitalizeInputType)
         textView.keyListener = TextKeyListener.getInstance(autoCorrect, capitalize)
     } else {
-        textView.inputType = inputType.and(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT.inv())
+        textView.inputType = inputType.and(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT.inv()).or(capitalizeInputType)
         textView.keyListener = TextKeyListener.getInstance(false, capitalize)
     }
 }
