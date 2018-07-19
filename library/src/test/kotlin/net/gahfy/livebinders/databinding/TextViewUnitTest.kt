@@ -578,4 +578,58 @@ class TextViewUnitTest {
         setMutableCapitalize(textView, mutableCapitalize)
         mutableCapitalize?.value = TextKeyListener.Capitalize.CHARACTERS
     }
+
+
+    @Test
+    fun textview_mutablecursorvisible_nonnull() {
+        val textView = mockTextView
+
+        val mutableCursorVisibility = MutableLiveData<Boolean>()
+
+        setMutableCursorVisible(textView, mutableCursorVisibility)
+
+        mutableCursorVisibility.value = true
+        assertEquals("cursor visibility value must change", true, textView.isCursorVisible)
+
+        mutableCursorVisibility.value = false
+        assertEquals("cursor visibility value must change", false, textView.isCursorVisible)
+
+        mutableCursorVisibility.value = null
+        assertEquals("cursor visibility value must change", false, textView.isCursorVisible)
+    }
+
+    @Test
+    fun textview_mutablecursorvisible_nullparentactivity() {
+        // Assert no exception
+        val textView = mock(TextView::class.java)
+        `when`(textView.context).thenReturn(mock(Context::class.java))
+
+        val mutableCursorVisibility = MutableLiveData<Boolean>()
+
+        setMutableCursorVisible(textView, mutableCursorVisibility)
+        mutableCursorVisibility.value = true
+    }
+
+    @Test
+    fun textview_mutablecursorvisible_nullcursorvisible() {
+        // Assert no exception
+        val textView = mockTextView
+
+        val mutableCursorVisibility: MutableLiveData<Boolean>? = null
+
+        setMutableCursorVisible(textView, mutableCursorVisibility)
+        mutableCursorVisibility?.value = true
+    }
+
+    @Test
+    fun textview_mutablecursorvisible_nullcursorvisibleandactivity() {
+        // Assert no exception
+        val textView = mock(TextView::class.java)
+        `when`(textView.context).thenReturn(mock(Context::class.java))
+
+        val mutableCursorVisibility: MutableLiveData<Boolean>? = null
+
+        setMutableCursorVisible(textView, mutableCursorVisibility)
+        mutableCursorVisibility?.value = true
+    }
 }

@@ -11,5 +11,6 @@ $dokka.location:net.gahfy.livebinders.extension$setMutableAutoText(android.widge
 $dokka.location:net.gahfy.livebinders.extension$setMutableBreakStrategy(android.widget.TextView, androidx.lifecycle.MutableLiveData((kotlin.Int)))net.gahfy.livebinders.extension/android.widget.-text-view/set-mutable-break-strategy.md
 $dokka.location:net.gahfy.livebinders.extension$setMutableBufferType(android.widget.TextView, androidx.lifecycle.MutableLiveData((android.widget.TextView.BufferType)))net.gahfy.livebinders.extension/android.widget.-text-view/set-mutable-buffer-type.md
 $dokka.location:net.gahfy.livebinders.extension$setMutableCapitalize(android.widget.TextView, androidx.lifecycle.MutableLiveData((android.text.method.TextKeyListener.Capitalize)))net.gahfy.livebinders.extension/android.widget.-text-view/set-mutable-capitalize.md
+$dokka.location:net.gahfy.livebinders.extension$setMutableCursorVisible(android.widget.TextView, androidx.lifecycle.MutableLiveData((kotlin.Boolean)))net.gahfy.livebinders.extension/android.widget.-text-view/set-mutable-cursor-visible.md
 net.gahfy.livebinders.databinding
 net.gahfy.livebinders.extension

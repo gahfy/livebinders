@@ -7,8 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleRegistry
 import org.mockito.ArgumentMatchers
-import org.mockito.ArgumentMatchers.any
-import org.mockito.ArgumentMatchers.anyInt
+import org.mockito.ArgumentMatchers.*
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.invocation.InvocationOnMock
@@ -23,6 +22,7 @@ private var inputType = 1
 private var breakStrategy = 1
 private var bufferType = TextView.BufferType.NORMAL
 private var textContent: CharSequence = ""
+private var cursorVisible = false
 
 fun resetTextView(){
     autoLinkValue = 0
@@ -35,6 +35,7 @@ fun resetTextView(){
     breakStrategy = 1
     bufferType = TextView.BufferType.NORMAL
     textContent = ""
+    cursorVisible = false
 }
 
 val mockTextView:TextView
@@ -106,6 +107,10 @@ val mockTextView:TextView
                     SpannableStringBuilder(textContent)
             }
         }
+
+        // Cursor Visible
+        `when`(textView.setCursorVisible(anyBoolean())).thenAnswer { invocation -> cursorVisible = invocation.arguments[0] as Boolean; null }
+        `when`(textView.isCursorVisible).thenAnswer { cursorVisible }
 
         val lifecycle = LifecycleRegistry(parentActivity)
         `when`(parentActivity.lifecycle).thenReturn(lifecycle)

@@ -131,3 +131,13 @@ fun TextView.setMutableBufferType(bufferType: MutableLiveData<TextView.BufferTyp
 fun TextView.setMutableCapitalize(capitalize: MutableLiveData<TextKeyListener.Capitalize>?) {
     setMutableCapitalize(this, capitalize)
 }
+
+/**
+ * Sets a mutable visibility for the cursor.
+ *
+ * __Related XML attribute:__ app:mutableCursorVisible
+ * @param cursorVisible the mutable visibility method to apply on the cursor of this [TextView]
+ */
+fun TextView.setMutableCursorVisible(cursorVisible: MutableLiveData<Boolean>?) {
+    setMutableCursorVisible(this, cursorVisible)
+}

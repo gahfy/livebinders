@@ -157,4 +157,19 @@ class TextViewUnitTest{
         Assert.assertNotEquals("capitalize value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_CAP_WORDS), textView.inputType)
         Assert.assertNotEquals("capitalize value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES), textView.inputType)
     }
+
+    @Test
+    fun textview_setcursorvisible() {
+        val textView = mockTextView
+
+        val mutableCursorVisible = MutableLiveData<Boolean>()
+
+        textView.setMutableCursorVisible(mutableCursorVisible)
+        mutableCursorVisible.value = true
+        Assert.assertEquals("cursor visible value must change", true, textView.isCursorVisible)
+        mutableCursorVisible.value = false
+        Assert.assertEquals("cursor visible value must change", false, textView.isCursorVisible)
+        mutableCursorVisible.value = null
+        Assert.assertEquals("cursor visible value must change", false, textView.isCursorVisible)
+    }
 }

@@ -244,6 +244,23 @@ internal fun setMutableCapitalize(textView: TextView, capitalize: MutableLiveDat
     }
 }
 
+/**
+ * Sets a mutable visibility for the cursor.
+ *
+ * __Related XML attribute:__ app:mutableCursorVisible
+ * @param textView the [TextView] on which to apply the mutable visibility for the cursor.
+ * @param cursorVisible the mutable visibility method to apply on the cursor of the [TextView]
+ */
+@BindingAdapter("mutableCursorVisible")
+internal fun setMutableCursorVisible(textView: TextView, cursorVisible: MutableLiveData<Boolean>?) {
+    val parentActivity: AppCompatActivity? = textView.parentActivity
+    if (parentActivity != null && cursorVisible != null) {
+        cursorVisible.observe(parentActivity, Observer { value ->
+            textView.isCursorVisible = (value == true)
+        })
+    }
+}
+
 private fun setAutoCorrect(textView: TextView, autoCorrect: Boolean?) {
     val capitalize = if (textView.inputType == textView.inputType.or(InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS)) TextKeyListener.Capitalize.CHARACTERS
     else if (textView.inputType == textView.inputType.or(InputType.TYPE_TEXT_FLAG_CAP_WORDS)) TextKeyListener.Capitalize.WORDS
