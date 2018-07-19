@@ -1,5 +1,7 @@
 package net.gahfy.livebinders.testutils
 
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
@@ -9,6 +11,7 @@ import org.mockito.ArgumentMatchers.any
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
+import org.mockito.invocation.InvocationOnMock
 
 private var autoLinkValue = 0
 private var autoSizeMax = -1
@@ -16,7 +19,10 @@ private var autoSizeMin = -1
 private var autoSizeGranularity = -1
 private var autoSizePresets = intArrayOf()
 private var autoSizeTextType = 0
-
+private var inputType = 1
+private var breakStrategy = 1
+private var bufferType = TextView.BufferType.NORMAL
+private var textContent: CharSequence = ""
 
 fun resetTextView(){
     autoLinkValue = 0
@@ -25,6 +31,10 @@ fun resetTextView(){
     autoSizeGranularity = -1
     autoSizePresets = intArrayOf()
     autoSizeTextType = 0
+    inputType = 1
+    breakStrategy = 1
+    bufferType = TextView.BufferType.NORMAL
+    textContent = ""
 }
 
 val mockTextView:TextView
@@ -67,9 +77,45 @@ val mockTextView:TextView
         }
         `when`(textView.autoSizeTextType).thenAnswer { autoSizeTextType }
 
+        // Input Type
+        `when`(textView.setInputType(ArgumentMatchers.anyInt())).thenAnswer { invocation ->
+            inputType = invocation.arguments[0] as Int
+            null
+        }
+        `when`(textView.inputType).thenAnswer { inputType }
+
+        // Break Strategy
+        `when`(textView.setBreakStrategy(ArgumentMatchers.anyInt())).thenAnswer { invocation ->
+            breakStrategy = invocation.arguments[0] as Int
+            null
+        }
+        `when`(textView.breakStrategy).thenAnswer { breakStrategy }
+
+        // Buffer Type
+        `when`(textView.setText(ArgumentMatchers.any(CharSequence::class.java), any(TextView.BufferType::class.java))).thenAnswer { invocation -> setText(invocation) }
+        `when`(textView.setText(ArgumentMatchers.any(String::class.java), any(TextView.BufferType::class.java))).thenAnswer { invocation -> setText(invocation) }
+        `when`(textView.setText(ArgumentMatchers.any(SpannableString::class.java), any(TextView.BufferType::class.java))).thenAnswer { invocation -> setText(invocation) }
+        `when`(textView.setText(ArgumentMatchers.any(SpannableStringBuilder::class.java), any(TextView.BufferType::class.java))).thenAnswer { invocation -> setText(invocation) }
+        `when`(textView.text).thenAnswer {
+            when (bufferType) {
+                TextView.BufferType.NORMAL ->
+                    textContent
+                TextView.BufferType.SPANNABLE ->
+                    SpannableString(textContent)
+                TextView.BufferType.EDITABLE ->
+                    SpannableStringBuilder(textContent)
+            }
+        }
+
         val lifecycle = LifecycleRegistry(parentActivity)
         `when`(parentActivity.lifecycle).thenReturn(lifecycle)
         lifecycle.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
 
         return textView
     }
+
+private fun setText(invocation: InvocationOnMock): Void? {
+    net.gahfy.livebinders.testutils.textContent = invocation.arguments[0] as CharSequence
+    net.gahfy.livebinders.testutils.bufferType = invocation.arguments[1] as TextView.BufferType
+    return null
+}

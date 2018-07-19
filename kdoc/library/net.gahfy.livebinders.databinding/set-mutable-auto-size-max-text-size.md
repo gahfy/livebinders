@@ -13,15 +13,7 @@ By using this parameter, the scale type will be set to [TextView.AUTO_SIZE_TEXT_
 
 ### Parameters
 
-`textView` - the TextView on which to apply the mutable max scaling text size.
+`textView` - the [TextView](https://developer.android.com/reference/android/widget/TextView.html) on which to apply the mutable max scaling text size.
 
-`size` - the mutable max scaling text size. If the value is null, then 2000 will be set.
-
-### Exceptions
-
-`IllegalArgumentException` - if the value of size is equal or lower than 0
-
-**See Also**
-
-[TextView.setAutoSizeTextTypeUniformWithConfiguration](https://developer.android.com/reference/android/widget/TextView.html#setAutoSizeTextTypeUniformWithConfiguration(int, int, int, int))
-
+`size` - the mutable max scaling text size to apply to the [TextView](https://developer.android.com/reference/android/widget/TextView.html). If the value is null,
+then 2000 will be set.

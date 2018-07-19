@@ -1,7 +1,13 @@
 package net.gahfy.livebinders.extension
 
 import android.os.Build
+import android.text.Editable
+import android.text.InputType
+import android.text.Layout
+import android.text.Spannable
+import android.text.method.TextKeyListener
 import android.text.util.Linkify
+import android.widget.TextView
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import net.gahfy.livebinders.testutils.mockTextView
@@ -96,5 +102,59 @@ class TextViewUnitTest{
         mutableTextType.value = 1
 
         Assert.assertEquals("Autosizemax value must change", 1, textView.autoSizeTextType)
+    }
+
+    @Test
+    fun textview_setautotext() {
+        val textView = mockTextView
+
+        val mutableAutoText = MutableLiveData<Boolean>()
+
+        textView.setMutableAutoText(mutableAutoText)
+        mutableAutoText.value = false
+        Assert.assertNotEquals("autotext value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT), textView.inputType)
+        mutableAutoText.value = true
+        Assert.assertEquals("autotext value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT), textView.inputType)
+    }
+
+    @Test
+    fun textview_setbreakstrategy() {
+        val textView = mockTextView
+
+        val mutableBreakStrategy = MutableLiveData<Int>()
+
+        textView.setMutableBreakStrategy(mutableBreakStrategy)
+        mutableBreakStrategy.value = Layout.BREAK_STRATEGY_BALANCED
+
+        Assert.assertEquals("breakstrategy value must change", Layout.BREAK_STRATEGY_BALANCED, textView.breakStrategy)
+    }
+
+    @Test
+    fun textview_setbuffertype() {
+        val textView = mockTextView
+
+        val mutableBufferType = MutableLiveData<TextView.BufferType>()
+
+        textView.setMutableBufferType(mutableBufferType)
+        mutableBufferType.value = TextView.BufferType.EDITABLE
+        Assert.assertTrue("buffertype value must change", textView.text is Editable)
+        mutableBufferType.value = TextView.BufferType.SPANNABLE
+        Assert.assertFalse("buffertype value must change", textView.text is Editable)
+        Assert.assertTrue("buffertype value must change", textView.text is Spannable)
+    }
+
+    @Test
+    fun textview_setcapitalize() {
+        val textView = mockTextView
+
+        val mutableCapitalize = MutableLiveData<TextKeyListener.Capitalize>()
+
+        textView.setMutableCapitalize(mutableCapitalize)
+        mutableCapitalize.value = TextKeyListener.Capitalize.CHARACTERS
+        Assert.assertEquals("capitalize value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS), textView.inputType)
+        mutableCapitalize.value = TextKeyListener.Capitalize.NONE
+        Assert.assertNotEquals("capitalize value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS), textView.inputType)
+        Assert.assertNotEquals("capitalize value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_CAP_WORDS), textView.inputType)
+        Assert.assertNotEquals("capitalize value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES), textView.inputType)
     }
 }

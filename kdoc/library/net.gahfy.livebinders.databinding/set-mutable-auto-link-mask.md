@@ -13,12 +13,8 @@ Avoid using [Linkify.MAP_ADDRESSES](https://developer.android.com/reference/andr
 
 ### Parameters
 
-`textView` - the TextView on which to apply the mutable autolink mask
+`textView` - the [TextView](https://developer.android.com/reference/android/widget/TextView.html) on which to apply the mutable autolink mask
 
-`mask` - the mutable autolink mask. The value must be one of null, [Linkify.ALL](https://developer.android.com/reference/android/text/util/Linkify.html#ALL),
-[Linkify.EMAIL_ADDRESSES](https://developer.android.com/reference/android/text/util/Linkify.html#EMAIL_ADDRESSES), [Linkify.EMAIL_ADDRESSES](https://developer.android.com/reference/android/text/util/Linkify.html#EMAIL_ADDRESSES), [Linkify.PHONE_NUMBERS](https://developer.android.com/reference/android/text/util/Linkify.html#PHONE_NUMBERS), [Linkify.WEB_URLS](https://developer.android.com/reference/android/text/util/Linkify.html#WEB_URLS)
-
-**See Also**
-
-[TextView.setAutoLinkMask](https://developer.android.com/reference/android/widget/TextView.html#setAutoLinkMask(int))
-
+`mask` - the mutable autolink mask to apply to the [TextView](https://developer.android.com/reference/android/widget/TextView.html). The value must be one of null,
+[Linkify.ALL](https://developer.android.com/reference/android/text/util/Linkify.html#ALL), [Linkify.EMAIL_ADDRESSES](https://developer.android.com/reference/android/text/util/Linkify.html#EMAIL_ADDRESSES), [Linkify.EMAIL_ADDRESSES](https://developer.android.com/reference/android/text/util/Linkify.html#EMAIL_ADDRESSES), [Linkify.PHONE_NUMBERS](https://developer.android.com/reference/android/text/util/Linkify.html#PHONE_NUMBERS),
+[Linkify.WEB_URLS](https://developer.android.com/reference/android/text/util/Linkify.html#WEB_URLS)

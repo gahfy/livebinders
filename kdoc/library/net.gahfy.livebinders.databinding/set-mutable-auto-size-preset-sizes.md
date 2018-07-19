@@ -13,11 +13,6 @@ By using this parameter, the scale type will be set to [TextView.AUTO_SIZE_TEXT_
 
 ### Parameters
 
-`textView` - the TextView on which to apply the mutable preset sizes.
+`textView` - the [TextView](https://developer.android.com/reference/android/widget/TextView.html) on which to apply the mutable preset sizes.
 
-`sizes` - a mutable int array of sizes in pixels.
-
-**See Also**
-
-[TextView.setAutoSizeTextTypeUniformWithPresetSizes](https://developer.android.com/reference/android/widget/TextView.html#setAutoSizeTextTypeUniformWithPresetSizes(int[], int))
-
+`sizes` - a mutable int array of sizes in pixels to apply to the [TextView](https://developer.android.com/reference/android/widget/TextView.html)

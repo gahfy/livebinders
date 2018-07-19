@@ -2,6 +2,11 @@ package net.gahfy.livebinders.databinding
 
 import android.content.Context
 import android.os.Build
+import android.text.Editable
+import android.text.InputType
+import android.text.Layout
+import android.text.Spannable
+import android.text.method.TextKeyListener
 import android.text.util.Linkify
 import android.widget.TextView
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -9,7 +14,9 @@ import androidx.lifecycle.MutableLiveData
 import net.gahfy.livebinders.testutils.mockTextView
 import net.gahfy.livebinders.testutils.resetTextView
 import net.gahfy.livebinders.testutils.setFinalStatic
+import org.junit.Assert
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -333,5 +340,223 @@ class TextViewUnitTest {
 
         setMutableAutoSizeTextType(textView, mutableAutoSizeTextType)
         mutableAutoSizeTextType?.value = 100
+    }
+
+    @Test
+    fun textview_mutableautotext_nonnull() {
+        val textView = mockTextView
+
+        val mutableAutoText = MutableLiveData<Boolean>()
+
+        setMutableAutoText(textView, mutableAutoText)
+        mutableAutoText.value = false
+        assertNotEquals("autotext value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT), textView.inputType)
+        mutableAutoText.value = true
+        assertEquals("autotext value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT), textView.inputType)
+        mutableAutoText.value = null
+        assertNotEquals("autotext value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT), textView.inputType)
+    }
+
+    @Test
+    fun textview_mutableautotext_nullparentactivity() {
+        // Assert no exception
+        val textView = mock(TextView::class.java)
+        `when`(textView.context).thenReturn(mock(Context::class.java))
+
+        val mutableAutoText = MutableLiveData<Boolean>()
+
+        setMutableAutoText(textView, mutableAutoText)
+        mutableAutoText.value = true
+    }
+
+    @Test
+    fun textview_mutableautotext_nullautotext() {
+        // Assert no exception
+        val textView = mockTextView
+
+        val mutableAutoText: MutableLiveData<Boolean>? = null
+
+        setMutableAutoText(textView, mutableAutoText)
+        mutableAutoText?.value = true
+    }
+
+    @Test
+    fun textview_mutableautotext_nullautotextandactivity() {
+        // Assert no exception
+        val textView = mock(TextView::class.java)
+        `when`(textView.context).thenReturn(mock(Context::class.java))
+
+        val mutableAutoText: MutableLiveData<Boolean>? = null
+
+        setMutableAutoText(textView, mutableAutoText)
+        mutableAutoText?.value = true
+    }
+
+    @Test
+    fun textview_mutablebreakingstrategy_nonnull() {
+        val textView = mockTextView
+
+        val mutableBreakStrategy = MutableLiveData<Int>()
+
+        setMutableBreakStrategy(textView, mutableBreakStrategy)
+        mutableBreakStrategy.value = Layout.BREAK_STRATEGY_BALANCED
+
+        assertEquals("breaking strategy value must change", Layout.BREAK_STRATEGY_BALANCED, textView.breakStrategy)
+
+        mutableBreakStrategy.value = Layout.BREAK_STRATEGY_SIMPLE
+
+        assertEquals("breaking strategy value must change", Layout.BREAK_STRATEGY_SIMPLE, textView.breakStrategy)
+
+        // Assert no exception
+        mutableBreakStrategy.value = null
+    }
+
+    @Test
+    fun textview_mutablebreakingstrategy_nullparentactivity() {
+        // Assert no exception
+        val textView = mock(TextView::class.java)
+        `when`(textView.context).thenReturn(mock(Context::class.java))
+
+        val mutableBreakStrategy = MutableLiveData<Int>()
+
+        setMutableBreakStrategy(textView, mutableBreakStrategy)
+        mutableBreakStrategy.value = 1
+    }
+
+    @Test
+    fun textview_mutablebreakingstrategy_nullbreakingstrategy() {
+        // Assert no exception
+        val textView = mockTextView
+
+        val mutableBreakStrategy: MutableLiveData<Int>? = null
+
+        setMutableBreakStrategy(textView, mutableBreakStrategy)
+        mutableBreakStrategy?.value = 1
+    }
+
+    @Test
+    fun textview_mutablebreakingstrategy_nullbreakingstrategyandactivity() {
+        // Assert no exception
+        val textView = mock(TextView::class.java)
+        `when`(textView.context).thenReturn(mock(Context::class.java))
+
+        val mutableBreakStrategy: MutableLiveData<Int>? = null
+
+        setMutableBreakStrategy(textView, mutableBreakStrategy)
+        mutableBreakStrategy?.value = 100
+    }
+
+    @Test
+    fun textview_mutablebuffertype_nonnull() {
+        val textView = mockTextView
+
+        val mutableBufferType = MutableLiveData<TextView.BufferType>()
+
+        setMutableBufferType(textView, mutableBufferType)
+        mutableBufferType.value = TextView.BufferType.EDITABLE
+        Assert.assertTrue("buffertype value must change", textView.text is Editable)
+        mutableBufferType.value = TextView.BufferType.SPANNABLE
+        Assert.assertFalse("buffertype value must change", textView.text is Editable)
+        Assert.assertTrue("buffertype value must change", textView.text is Spannable)
+
+        // Assert no exception
+        mutableBufferType.value = null
+    }
+
+    @Test
+    fun textview_mutablebuffertype_nullparentactivity() {
+        // Assert no exception
+        val textView = mock(TextView::class.java)
+        `when`(textView.context).thenReturn(mock(Context::class.java))
+
+        val mutableBufferType = MutableLiveData<TextView.BufferType>()
+
+        setMutableBufferType(textView, mutableBufferType)
+        mutableBufferType.value = TextView.BufferType.SPANNABLE
+    }
+
+    @Test
+    fun textview_mutablebuffertype_nullbuffertype() {
+        // Assert no exception
+        val textView = mockTextView
+
+        val mutableBufferType: MutableLiveData<TextView.BufferType>? = null
+
+        setMutableBufferType(textView, mutableBufferType)
+        mutableBufferType?.value = TextView.BufferType.SPANNABLE
+    }
+
+    @Test
+    fun textview_mutablebuffertype_nullbuffertypeandactivity() {
+        // Assert no exception
+        val textView = mock(TextView::class.java)
+        `when`(textView.context).thenReturn(mock(Context::class.java))
+
+        val mutableBufferType: MutableLiveData<TextView.BufferType>? = null
+
+        setMutableBufferType(textView, mutableBufferType)
+        mutableBufferType?.value = TextView.BufferType.SPANNABLE
+    }
+
+    @Test
+    fun textview_mutablecapitalize_nonnull() {
+        val textView = mockTextView
+
+        val mutableCapitalize = MutableLiveData<TextKeyListener.Capitalize>()
+
+        setMutableCapitalize(textView, mutableCapitalize)
+        mutableCapitalize.value = TextKeyListener.Capitalize.CHARACTERS
+        Assert.assertEquals("capitalize value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS), textView.inputType)
+        mutableCapitalize.value = TextKeyListener.Capitalize.NONE
+        Assert.assertNotEquals("capitalize value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS), textView.inputType)
+        Assert.assertNotEquals("capitalize value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_CAP_WORDS), textView.inputType)
+        Assert.assertNotEquals("capitalize value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES), textView.inputType)
+        mutableCapitalize.value = TextKeyListener.Capitalize.WORDS
+        Assert.assertEquals("capitalize value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_CAP_WORDS), textView.inputType)
+        Assert.assertNotEquals("capitalize value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS), textView.inputType)
+        mutableCapitalize.value = TextKeyListener.Capitalize.SENTENCES
+        Assert.assertEquals("capitalize value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES), textView.inputType)
+        Assert.assertNotEquals("capitalize value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS), textView.inputType)
+        mutableCapitalize.value = null
+        Assert.assertNotEquals("capitalize value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS), textView.inputType)
+        Assert.assertNotEquals("capitalize value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_CAP_WORDS), textView.inputType)
+        Assert.assertNotEquals("capitalize value must change", textView.inputType.or(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES), textView.inputType)
+        // Assert no exception
+        mutableCapitalize.value = null
+    }
+
+    @Test
+    fun textview_mutablecapitalize_nullparentactivity() {
+        // Assert no exception
+        val textView = mock(TextView::class.java)
+        `when`(textView.context).thenReturn(mock(Context::class.java))
+
+        val mutableCapitalize = MutableLiveData<TextKeyListener.Capitalize>()
+
+        setMutableCapitalize(textView, mutableCapitalize)
+        mutableCapitalize.value = TextKeyListener.Capitalize.CHARACTERS
+    }
+
+    @Test
+    fun textview_mutablecapitalize_nullbuffertype() {
+        // Assert no exception
+        val textView = mockTextView
+
+        val mutableCapitalize: MutableLiveData<TextKeyListener.Capitalize>? = null
+
+        setMutableCapitalize(textView, mutableCapitalize)
+        mutableCapitalize?.value = TextKeyListener.Capitalize.CHARACTERS
+    }
+
+    @Test
+    fun textview_mutablecapitalize_nullbuffertypeandactivity() {
+        // Assert no exception
+        val textView = mock(TextView::class.java)
+        `when`(textView.context).thenReturn(mock(Context::class.java))
+
+        val mutableCapitalize: MutableLiveData<TextKeyListener.Capitalize>? = null
+
+        setMutableCapitalize(textView, mutableCapitalize)
+        mutableCapitalize?.value = TextKeyListener.Capitalize.CHARACTERS
     }
 }
