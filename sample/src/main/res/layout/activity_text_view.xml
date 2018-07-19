@@ -40,13 +40,11 @@
             app:layout_constraintTop_toBottomOf="@+id/autolink_title" />
 
         <TextView
+            style="@style/clickable_text"
             android:id="@+id/autolink_none"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/autolink_none"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:textColor="@color/colorAccent"
             android:layout_marginTop="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
@@ -55,13 +53,11 @@
             app:layout_constraintTop_toBottomOf="@+id/coords" />
 
         <TextView
+            style="@style/clickable_text"
             android:id="@+id/autolink_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/autolink_email_address"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:textColor="@color/colorAccent"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             app:clickListener="@{viewModel.autolinkEmailClickListener}"
@@ -69,13 +65,11 @@
             app:layout_constraintTop_toTopOf="@+id/autolink_none" />
 
         <TextView
+            style="@style/clickable_text"
             android:id="@+id/autolink_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/autolink_phone_number"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:textColor="@color/colorAccent"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             app:clickListener="@{viewModel.autolinkPhoneClickListener}"
@@ -83,13 +77,11 @@
             app:layout_constraintTop_toTopOf="@+id/autolink_none" />
 
         <TextView
+            style="@style/clickable_text"
             android:id="@+id/autolink_url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/autolink_web_urls"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:textColor="@color/colorAccent"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             app:clickListener="@{viewModel.autolinkUrlClickListener}"
@@ -97,13 +89,11 @@
             app:layout_constraintTop_toTopOf="@+id/autolink_none" />
 
         <TextView
+            style="@style/clickable_text"
             android:id="@+id/autolink_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/autolink_all"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:textColor="@color/colorAccent"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             app:clickListener="@{viewModel.autolinkAllClickListener}"
@@ -154,13 +144,11 @@
             tools:ignore="UnusedAttribute" />
 
         <TextView
+            style="@style/clickable_text"
             android:id="@+id/automaxsize_200"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/max_text_size_200"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:textColor="@color/colorAccent"
             android:layout_marginTop="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
@@ -170,13 +158,11 @@
             app:layout_constraintTop_toBottomOf="@+id/mynameis" />
 
         <TextView
+            style="@style/clickable_text"
             android:id="@+id/automaxsize_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/max_text_size_10"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:textColor="@color/colorAccent"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:visibility="@{viewModel.autosizeVisibility}"
