@@ -12,6 +12,6 @@ import androidx.databinding.BindingAdapter
  * @see View.setOnClickListener
  */
 @BindingAdapter("clickListener")
-fun setClickListener(view: View, l: View.OnClickListener){
+internal fun setClickListener(view: View, l: View.OnClickListener) {
     view.setOnClickListener(l)
 }

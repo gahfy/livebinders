@@ -1,0 +1,18 @@
+# TextView
+
+## Summary
+
+### XML Attributes
+
+| name | description | expected type | associated method |
+|---|---|---|---|
+| **app:liveAutoLink** | Live version of [**android:autoLink**](https://developer.android.com/reference/android/widget/TextView.html#attr_android:autoLink) | `LiveData<Int>` | [**TextView.addLiveAutoLink()**](../../kdoc/library/net.gahfy.livebinders.extension/android.widget.-text-view/add-live-auto-link-mask.md) |
+| **app:liveAutoSizeMaxTextSize** | Live version of [**android:autoSizeMaxTextSize**](https://developer.android.com/reference/android/widget/TextView.html#attr_android:autoSizeMaxTextSize) | `LiveData<Int>` | [**TextView.addLiveAutoSizeMaxTextSize()**](../../kdoc/library/net.gahfy.livebinders.extension/android.widget.-text-view/add-live-auto-max-text-size.md) |
+| **app:liveAutoSizeMinTextSize** | Live version of [**android:autoSizeMinTextSize**](https://developer.android.com/reference/android/widget/TextView.html#attr_android:autoSizeMinTextSize) | `LiveData<Int>` | [**TextView.addLiveAutoSizeMinTextSize()**](../../kdoc/library/net.gahfy.livebinders.extension/android.widget.-text-view/add-live-auto-min-text-size.md) |
+| **app:liveAutoSizePresetSizes** | Live version of [**android:autoSizePresetSizes**](https://developer.android.com/reference/android/widget/TextView.html#attr_android:autoSizePresetSizes) | `LiveData<IntArray>` | [**TextView.addLiveAutoSizeTextTypeUniformWithPresetSizes()**](../../kdoc/library/net.gahfy.livebinders.extension/android.widget.-text-view/add-live-auto-size-text-type-uniform-with-preset-sizes.md) |
+| **app:liveAutoSizeStepGranularity** | Live version of [**android:autoSizeStepGranularity**](https://developer.android.com/reference/android/widget/TextView.html#attr_android:autoSizeStepGranularity) | `LiveData<Int>` | [**TextView.addLiveAutoSizeStepGranularity()**](../../kdoc/library/net.gahfy.livebinders.extension/android.widget.-text-view/add-live-auto-size-step-granularity.md) |
+| **app:liveAutoSizeTextType** | Live version of [**android:autoSizeTextType**](https://developer.android.com/reference/android/widget/TextView.html#attr_android:autoSizeTextType) | `LiveData<Int>` | [**TextView.addLiveAutoSizeTextTypeWithDefaults()**](../../kdoc/library/net.gahfy.livebinders.extension/android.widget.-text-view/add-live-auto-size-text-type-with-defaults.md) |
+| **app:liveAutoText** | Live version of [**android:autoText**](https://developer.android.com/reference/android/widget/TextView.html#attr_android:autoText) | `LiveData<Boolean>` | [**TextView.addLiveAutoText()**](../../kdoc/library/net.gahfy.livebinders.extension/android.widget.-text-view/add-live-auto-text.md) |
+| **app:liveBreakStrategy** | Live version of [**android:breakStrategy**](https://developer.android.com/reference/android/widget/TextView.html#attr_android:breakStrategy) | `LiveData<TextView.BufferType>` | [**TextView.addLiveBreakStrategy()**](../../kdoc/library/net.gahfy.livebinders.extension/android.widget.-text-view/add-live-break-strategy.md) |
+| **app:liveBufferType** | Live version of [**android:bufferType**](https://developer.android.com/reference/android/widget/TextView.html#attr_android:bufferType) | `LiveData<Int>` | [**TextView.addLiveBufferType()**](../../kdoc/library/net.gahfy.livebinders.extension/android.widget.-text-view/add-live-buffer-type.md) |
+| **app:liveCapitalize** | Live version of [**android:capitalize**](https://developer.android.com/reference/android/widget/TextView.html#attr_android:capitalize) | `LiveData<TextKeyListener.Capitalize>` | [**TextView.addLiveCursorVisible()**](../../kdoc/library/net.gahfy.livebinders.extension/android.widget.-text-view/add-live-cursor-visible.md) |

@@ -2,6 +2,9 @@ package net.gahfy.livebinders.testutils
 
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
+import android.text.method.DigitsKeyListener
+import android.text.method.KeyListener
+import android.text.method.TextKeyListener
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
@@ -19,7 +22,8 @@ private var autoSizeGranularity = -1
 private var autoSizePresets = intArrayOf()
 private var autoSizeTextType = 0
 private var inputType = 1
-private var breakStrategy = 1
+private var keyListener: KeyListener? = null
+private var breakStrategy = -1
 private var bufferType = TextView.BufferType.NORMAL
 private var textContent: CharSequence = ""
 private var cursorVisible = false
@@ -32,10 +36,11 @@ fun resetTextView(){
     autoSizePresets = intArrayOf()
     autoSizeTextType = 0
     inputType = 1
-    breakStrategy = 1
+    breakStrategy = -1
     bufferType = TextView.BufferType.NORMAL
     textContent = ""
     cursorVisible = false
+    keyListener = null
 }
 
 val mockTextView:TextView
@@ -44,7 +49,6 @@ val mockTextView:TextView
         val textView = Mockito.mock(TextView::class.java)
 
         `when`(textView.context).thenReturn(parentActivity)
-        `when`(textView.text).thenReturn("test")
 
         // Autolink
         `when`(textView.setAutoLinkMask(ArgumentMatchers.anyInt())).thenAnswer { invocation ->
@@ -66,7 +70,16 @@ val mockTextView:TextView
 
         // Autosize presets
         `when`(textView.setAutoSizeTextTypeUniformWithPresetSizes(any(IntArray::class.java), anyInt())).thenAnswer { invocation ->
-            autoSizePresets = invocation.arguments[0] as IntArray
+            val tempAutoSizePresets = mutableListOf<Int>()
+            for (size in (invocation.arguments[0] as IntArray)) {
+                if (size >= 1) {
+                    tempAutoSizePresets.add(size)
+                }
+            }
+            if (tempAutoSizePresets.size == 0) {
+                throw IllegalArgumentException("None of the preset sizes is valid: $tempAutoSizePresets")
+            }
+            autoSizePresets = tempAutoSizePresets.toIntArray()
             null
         }
         `when`(textView.autoSizeTextAvailableSizes).thenAnswer { autoSizePresets }
@@ -84,6 +97,18 @@ val mockTextView:TextView
             null
         }
         `when`(textView.inputType).thenAnswer { inputType }
+
+
+        // Key Listener
+        `when`(textView.setKeyListener(ArgumentMatchers.any(DigitsKeyListener::class.java))).thenAnswer { invocation ->
+            keyListener = invocation.arguments[0] as DigitsKeyListener?
+            null
+        }
+        `when`(textView.setKeyListener(ArgumentMatchers.any(TextKeyListener::class.java))).thenAnswer { invocation ->
+            keyListener = invocation.arguments[0] as TextKeyListener?
+            null
+        }
+        `when`(textView.keyListener).thenAnswer { keyListener }
 
         // Break Strategy
         `when`(textView.setBreakStrategy(ArgumentMatchers.anyInt())).thenAnswer { invocation ->
@@ -120,7 +145,7 @@ val mockTextView:TextView
     }
 
 private fun setText(invocation: InvocationOnMock): Void? {
-    net.gahfy.livebinders.testutils.textContent = invocation.arguments[0] as CharSequence
+    net.gahfy.livebinders.testutils.textContent = invocation.arguments[0].toString() ?: "" as CharSequence
     net.gahfy.livebinders.testutils.bufferType = invocation.arguments[1] as TextView.BufferType
     return null
 }

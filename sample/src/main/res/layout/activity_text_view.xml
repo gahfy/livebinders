@@ -34,7 +34,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginLeft="32dp"
             android:layout_marginRight="16dp"
-            app:mutableAutoLink="@{viewModel.autolinkValue}"
+            app:liveAutoLink="@{viewModel.autolinkValue}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/autolink_title" />
@@ -137,7 +137,7 @@
             android:layout_marginRight="16dp"
             android:autoSizeTextType="uniform"
             android:visibility="@{viewModel.autosizeVisibility}"
-            app:mutableAutoSizeMaxTextSize="@{viewModel.autoSizeMaxValue}"
+            app:liveAutoSizeMaxTextSize="@{viewModel.autoSizeMaxValue}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/auto_maxsize_title"

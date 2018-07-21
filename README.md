@@ -3,7 +3,7 @@
 
 # LiveBinders Library
 
-[Read Doc](doc/index.md)
+[Read Attribute Doc](attrDoc/index.md)
 
 [Read KDoc](kdoc/library/index.md)
 
