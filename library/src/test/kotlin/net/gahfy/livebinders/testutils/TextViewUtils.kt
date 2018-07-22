@@ -2,7 +2,6 @@ package net.gahfy.livebinders.testutils
 
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
-import android.graphics.drawable.Drawable
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.method.DigitsKeyListener
