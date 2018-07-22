@@ -775,4 +775,22 @@ class TextViewUnitTest{
         liveDrawableResIdTop.value = 123
         assertNotNull("Drawable top should have been updated", textView.compoundDrawables[1])
     }
+
+    @Test
+    fun textview_addLiveEditable() {
+        // Given
+        val textView = mockTextView
+        val liveEditable = MutableLiveData<Boolean>()
+
+        // When
+        textView.addLiveEditable(liveEditable)
+
+        // Then
+        liveEditable.value = false
+        assertEquals("Input type should have been updated", InputType.TYPE_NULL, textView.inputType)
+        liveEditable.value = true
+        assertEquals("Input type should have been updated", EditorInfo.TYPE_CLASS_TEXT, textView.inputType)
+        liveEditable.value = null
+        assertEquals("Input type should have not been updated", EditorInfo.TYPE_CLASS_TEXT, textView.inputType)
+    }
 }

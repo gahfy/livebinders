@@ -110,6 +110,10 @@ val mockTextView:TextView
             inputType = invocation.arguments[0] as Int
             null
         }
+        `when`(textView.setRawInputType(ArgumentMatchers.anyInt())).thenAnswer { invocation ->
+            inputType = invocation.arguments[0] as Int
+            null
+        }
         `when`(textView.inputType).thenAnswer { inputType }
 
 

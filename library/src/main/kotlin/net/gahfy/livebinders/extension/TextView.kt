@@ -355,6 +355,17 @@ fun TextView.addLiveDrawableTop(drawableTop: LiveData<Drawable>?){
     addLiveData(drawableTop, Observer { value -> setCompoundDrawableTop(value) })
 }
 
+/**
+ * Adds a live editable status to the TextView.
+ *
+ * __Related XML attribute:__ app:liveEditable
+ * @param editable the live editable status of the TextView
+ */
+@BindingAdapter("liveEditable")
+fun TextView.addLiveEditable(editable: LiveData<Boolean>?) {
+    addLiveData(editable, Observer { value -> setEditable(value) })
+}
+
 /** The minimum min text size that can be set without error */
 private const val MIN_SETTABLE_AUTO_SIZE_MIN_TEXT_SIZE = 1
 /** The default min text size */
@@ -787,6 +798,20 @@ private fun TextView.setCompoundDrawableTop(drawable: Drawable?){
 private fun TextView.setCompoundDrawableTop(@DrawableRes drawableResId: Int?){
     val drawableTop:Drawable? = ContextCompat.getDrawable(context, drawableResId?:0)
     setCompoundDrawableTop(drawableTop)
+}
+
+/**
+ * Sets whether the TextView is editable or not.
+ * @param editable whether the TextView is editable or not
+ */
+private fun TextView.setEditable(editable: Boolean?) {
+    if (editable == true) {
+        keyListener = TextKeyListener.getInstance()
+        setRawInputType(EditorInfo.TYPE_CLASS_TEXT)
+    } else if (editable == false) {
+        keyListener = null
+        setRawInputType(InputType.TYPE_NULL)
+    }
 }
 
 /**
