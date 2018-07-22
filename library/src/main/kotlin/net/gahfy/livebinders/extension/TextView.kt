@@ -1,14 +1,23 @@
 package net.gahfy.livebinders.extension
 
+import android.content.res.ColorStateList
+import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.text.InputType
 import android.text.Layout
+import android.text.method.DigitsKeyListener
 import android.text.method.TextKeyListener
 import android.text.util.Linkify
 import android.util.TypedValue
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.widget.TextViewCompat
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
@@ -147,7 +156,7 @@ fun TextView.addLiveCapitalize(capitalize: LiveData<TextKeyListener.Capitalize>?
 }
 
 /**
- * Sets a live visibility for the cursor.
+ * Adds a live visibility for the cursor.
  *
  * __Related XML attribute:__ app:liveCursorVisible
  * @param cursorVisible the live visibility method to apply on the cursor of this [TextView]
@@ -157,6 +166,195 @@ fun TextView.addLiveCursorVisible(cursorVisible: LiveData<Boolean>?) {
     addLiveData(cursorVisible, Observer { value -> setNullableCursorVisible(value) })
 }
 
+/**
+ * Adds a live characters that are accepted for this TextView with numeric method.
+ *
+ * __Related XML attribute:__ app:liveDigits
+ * @param digits the live characters that are accepted for this TextView
+ */
+@BindingAdapter("liveDigits")
+fun TextView.addLiveDigits(digits: LiveData<String>?){
+    addLiveData(digits, Observer { value -> setDigits(value) })
+}
+
+/**
+ * Adds a live resource id of the drawable to appear below the text.
+ *
+ * __Related XML attribute:__ app:liveDrawableBottom
+ * @param drawableBottom the live resource id of the drawable to appear below the text
+ */
+@BindingAdapter("liveDrawableBottom")
+fun TextView.addLiveDrawableResIdBottom(drawableBottom: LiveData<Int>?){
+    addLiveData(drawableBottom, Observer { value -> setCompoundDrawableBottom(value) })
+}
+
+/**
+ * Adds a live drawable to appear below the text.
+ *
+ * __Related XML attribute:__ app:liveDrawableBottom
+ * @param drawableBottom the live drawable to appear below the text
+ */
+@BindingAdapter("liveDrawableBottom")
+fun TextView.addLiveDrawableBottom(drawableBottom: LiveData<Drawable>?){
+    addLiveData(drawableBottom, Observer { value -> setCompoundDrawableBottom(value) })
+}
+
+/**
+ * Adds a live resource id of the drawable to appear to the end of the text.
+ *
+ * __Related XML attribute:__ app:liveDrawableEnd
+ * @param drawableEnd the live resource id of the drawable to appear to the end of the text
+ */
+@BindingAdapter("liveDrawableEnd")
+fun TextView.addLiveDrawableResIdEnd(drawableEnd: LiveData<Int>?){
+    addLiveData(drawableEnd, Observer { value -> setCompoundDrawableEnd(value) })
+}
+
+/**
+ * Adds a live drawable to appear to the end of the text.
+ *
+ * __Related XML attribute:__ app:liveDrawableEnd
+ * @param drawableEnd the live drawable to appear to the end of the text
+ */
+@BindingAdapter("liveDrawableEnd")
+fun TextView.addLiveDrawableEnd(drawableEnd: LiveData<Drawable>?){
+    addLiveData(drawableEnd, Observer { value -> setCompoundDrawableEnd(value) })
+}
+
+/**
+ * Adds a live resource id of the drawable to appear to the left of the text.
+ *
+ * __Related XML attribute:__ app:liveDrawableLeft
+ * @param drawableLeft the live resource id of the drawable to appear to the left of the text
+ */
+@BindingAdapter("liveDrawableLeft")
+fun TextView.addLiveDrawableResIdLeft(drawableLeft: LiveData<Int>?){
+    addLiveData(drawableLeft, Observer { value -> setCompoundDrawableLeft(value) })
+}
+
+/**
+ * Adds a live drawable to appear to the left of the text.
+ *
+ * __Related XML attribute:__ app:liveDrawableLeft
+ * @param drawableLeft the live drawable to appear to the left of the text
+ */
+@BindingAdapter("liveDrawableLeft")
+fun TextView.addLiveDrawableLeft(drawableLeft: LiveData<Drawable>?){
+    addLiveData(drawableLeft, Observer { value -> setCompoundDrawableLeft(value) })
+}
+
+/**
+ * Adds a live padding between the drawable and the text
+ *
+ * __Related XML attribute:__ app:liveDrawablePadding
+ * @param drawablePadding the live padding between the drawable and the text
+ */
+@BindingAdapter("liveDrawablePadding")
+fun TextView.addLiveDrawablePadding(drawablePadding: LiveData<Int>?){
+    addLiveData(drawablePadding, Observer { value -> setNullableCompoundDrawablePadding(value) })
+}
+
+/**
+ * Adds a live resource id of the drawable to appear to the right of the text.
+ *
+ * __Related XML attribute:__ app:liveDrawableRight
+ * @param drawableRight the live resource id of the drawable to appear to the right of the text
+ */
+@BindingAdapter("liveDrawableRight")
+fun TextView.addLiveDrawableResIdRight(drawableRight: LiveData<Int>?){
+    addLiveData(drawableRight, Observer { value -> setCompoundDrawableRight(value) })
+}
+
+/**
+ * Adds a live drawable to appear to the right of the text.
+ *
+ * __Related XML attribute:__ app:liveDrawableRight
+ * @param drawableRight the live drawable to appear to the right of the text
+ */
+@BindingAdapter("liveDrawableRight")
+fun TextView.addLiveDrawableRight(drawableRight: LiveData<Drawable>?){
+    addLiveData(drawableRight, Observer { value -> setCompoundDrawableRight(value) })
+}
+
+/**
+ * Adds a live resource id of the drawable to appear to the start of the text.
+ *
+ * __Related XML attribute:__ app:liveDrawableStart
+ * @param drawableStart the live resource id of the drawable to appear to the start of the text
+ */
+@BindingAdapter("liveDrawableStart")
+fun TextView.addLiveDrawableResIdStart(drawableStart: LiveData<Int>?){
+    addLiveData(drawableStart, Observer { value -> setCompoundDrawableStart(value) })
+}
+
+/**
+ * Adds a live drawable to appear to the start of the text.
+ *
+ * __Related XML attribute:__ app:liveDrawableStart
+ * @param drawableStart the live drawable to appear to the start of the text
+ */
+@BindingAdapter("liveDrawableStart")
+fun TextView.addLiveDrawableStart(drawableStart: LiveData<Drawable>?){
+    addLiveData(drawableStart, Observer { value -> setCompoundDrawableStart(value) })
+}
+
+/**
+ * Adds a live tint list to apply to the compound drawables of the TextView.
+ *
+ * __Related XML attribute:__ app:liveDrawableTint
+ * @param tint the live tint list to apply to the compound drawables of the TextView
+ */
+@BindingAdapter("liveDrawableTint")
+fun TextView.addLiveDrawableTint(tint: LiveData<ColorStateList>?){
+    addLiveData(tint, Observer { value -> setAllVersionNullableCompoundDrawableTintList(value) })
+}
+
+/**
+ * Adds a live tint list to apply to the compound drawables of the TextView.
+ *
+ * The expected value for the Live Data is the resource id of a Color resource.
+ *
+ * __Related XML attribute:__ app:liveDrawableTint
+ * @param tint the live tint list to apply to the compound drawables of the TextView
+ */
+@BindingAdapter("liveDrawableTint")
+fun TextView.addLiveDrawableTintResId(tint: LiveData<Int>?){
+    addLiveData(tint, Observer { value -> setAllVersionCompoundDrawableTintList(value) })
+}
+
+/**
+ * Specifies the live blending mode used to apply the tint specified by
+ * TextView.setCompoundDrawableTintList() to the compound drawables.
+ *
+ * __Related XML attribute:__ app:liveDrawableTint
+ * @param colorTintMode the live blending mode used to apply the tint, value may be null to clear tint
+ */
+@BindingAdapter("liveDrawableTintMode")
+fun TextView.addLiveDrawableTintMode(colorTintMode: LiveData<PorterDuff.Mode>?){
+    addLiveData(colorTintMode, Observer { value -> setAllVersionNullableCompoundDrawableTintMode(value) })
+}
+
+/**
+ * Adds a live resource id of the drawable to appear above the text.
+ *
+ * __Related XML attribute:__ app:liveDrawableTop
+ * @param drawableTop the live resource id of the drawable to appear above the text
+ */
+@BindingAdapter("liveDrawableTop")
+fun TextView.addLiveDrawableResIdTop(drawableTop: LiveData<Int>?){
+    addLiveData(drawableTop, Observer { value -> setCompoundDrawableTop(value) })
+}
+
+/**
+ * Adds a live drawable to appear above the text.
+ *
+ * __Related XML attribute:__ app:liveDrawableTop
+ * @param drawableTop the live drawable to appear above the text
+ */
+@BindingAdapter("liveDrawableTop")
+fun TextView.addLiveDrawableTop(drawableTop: LiveData<Drawable>?){
+    addLiveData(drawableTop, Observer { value -> setCompoundDrawableTop(value) })
+}
 
 /** The minimum min text size that can be set without error */
 private const val MIN_SETTABLE_AUTO_SIZE_MIN_TEXT_SIZE = 1
@@ -370,6 +568,226 @@ private fun TextView.setNullableBufferType(bufferType: TextView.BufferType?) {
  */
 private fun TextView.setNullableCursorVisible(cursorVisible: Boolean?) {
     isCursorVisible = (cursorVisible == true)
+}
+
+/**
+ * Specifies that this TextView has a numeric input method and that these specific characters are
+ * the ones that it will accept. If this is set, numeric is implied to be true.
+ * @param digits the characters that the TextView will accept
+ */
+private fun TextView.setDigits(digits: String?){
+    if(digits != null){
+        this.keyListener = DigitsKeyListener.getInstance(digits)
+        this.inputType = if(this.inputType != InputType.TYPE_NULL) this.inputType else EditorInfo.TYPE_CLASS_TEXT
+    }
+}
+
+/**
+ * Sets the drawable to appear below the text.
+ * @param drawable the drawable to appear below the text
+ */
+private fun TextView.setCompoundDrawableBottom(drawable: Drawable?){
+    setCompoundDrawablesWithIntrinsicBounds(
+            compoundDrawables[0],
+            compoundDrawables[1],
+            compoundDrawables[2],
+            drawable
+    )
+}
+
+/**
+ * Sets the drawable to appear below the text.
+ * @param drawableResId the resource id of the drawable to appear below the text
+ */
+private fun TextView.setCompoundDrawableBottom(@DrawableRes drawableResId: Int?){
+    val drawableBottom:Drawable? = ContextCompat.getDrawable(context, drawableResId?:0)
+    setCompoundDrawableBottom(drawableBottom)
+}
+
+/**
+ * Sets the drawable to appear to the end of the text.
+ * @param drawable the drawable to appear to the end of the text
+ */
+private fun TextView.setCompoundDrawableEnd(drawable: Drawable?){
+    val currentDrawables = TextViewCompat.getCompoundDrawablesRelative(this)
+
+    TextViewCompat.setCompoundDrawablesRelativeWithIntrinsicBounds(
+            this,
+            currentDrawables[0],
+            currentDrawables[1],
+            drawable,
+            currentDrawables[3]
+    )
+}
+
+/**
+ * Sets the drawable to appear to the end of the text.
+ * @param drawableResId the resource id of the drawable to appear to the end of the text
+ */
+private fun TextView.setCompoundDrawableEnd(@DrawableRes drawableResId: Int?){
+    val drawableEnd:Drawable? = ContextCompat.getDrawable(context, drawableResId?:0)
+    setCompoundDrawableEnd(drawableEnd)
+}
+
+/**
+ * Sets the drawable to appear to the left of the text.
+ * @param drawable the drawable to appear to the left of the text
+ */
+private fun TextView.setCompoundDrawableLeft(drawable: Drawable?){
+    setCompoundDrawablesWithIntrinsicBounds(
+            drawable,
+            compoundDrawables[1],
+            compoundDrawables[2],
+            compoundDrawables[3]
+    )
+}
+
+/**
+ * Sets the drawable to appear to the left of the text.
+ * @param drawableResId the resource id of the drawable to appear to the left of the text
+ */
+private fun TextView.setCompoundDrawableLeft(@DrawableRes drawableResId: Int?){
+    val drawableLeft:Drawable? = ContextCompat.getDrawable(context, drawableResId?:0)
+    setCompoundDrawableLeft(drawableLeft)
+}
+
+/**
+ * Sets the size of the padding between the compound drawables and the text.
+ * @param padding the size of the padding between the compound drawables and the text to set
+ */
+private fun TextView.setNullableCompoundDrawablePadding(padding: Int?){
+    if(padding != null){
+        this.compoundDrawablePadding = padding
+    }
+}
+
+/**
+ * Sets the drawable to appear to the right of the text.
+ * @param drawable the drawable to appear to the right of the text
+ */
+private fun TextView.setCompoundDrawableRight(drawable: Drawable?){
+    setCompoundDrawablesWithIntrinsicBounds(
+            compoundDrawables[0],
+            compoundDrawables[1],
+            drawable,
+            compoundDrawables[3]
+    )
+}
+
+/**
+ * Sets the drawable to appear to the right of the text.
+ * @param drawableResId the resource id of the drawable to appear to the right of the text
+ */
+private fun TextView.setCompoundDrawableRight(@DrawableRes drawableResId: Int?){
+    val drawableRight:Drawable? = ContextCompat.getDrawable(context, drawableResId?:0)
+    setCompoundDrawableRight(drawableRight)
+}
+
+/**
+ * Sets the drawable to appear to the start of the text.
+ * @param drawable the drawable to appear to the start of the text
+ */
+private fun TextView.setCompoundDrawableStart(drawable: Drawable?){
+    val currentDrawables = TextViewCompat.getCompoundDrawablesRelative(this)
+
+    TextViewCompat.setCompoundDrawablesRelativeWithIntrinsicBounds(
+            this,
+            drawable,
+            currentDrawables[1],
+            currentDrawables[2],
+            currentDrawables[3]
+    )
+}
+
+/**
+ * Sets the drawable to appear to the start of the text.
+ * @param drawableResId the resource id of the drawable to appear to the start of the text
+ */
+private fun TextView.setCompoundDrawableStart(@DrawableRes drawableResId: Int?){
+    val drawableStart:Drawable? = ContextCompat.getDrawable(context, drawableResId?:0)
+    setCompoundDrawableStart(drawableStart)
+}
+
+/**
+ * Sets the tint list to apply to the compound drawables of the TextView.
+ * @param colorStateList the tint list to apply to the compound drawables of the TextView
+ */
+private fun TextView.setAllVersionNullableCompoundDrawableTintList(colorStateList: ColorStateList?){
+    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+        this.compoundDrawableTintList = colorStateList
+    }
+    else{
+        if(compoundDrawables[0] != null)
+            DrawableCompat.setTintList(compoundDrawables[0], colorStateList)
+        if(compoundDrawables[1] != null)
+            DrawableCompat.setTintList(compoundDrawables[1], colorStateList)
+        if(compoundDrawables[2] != null)
+            DrawableCompat.setTintList(compoundDrawables[2], colorStateList)
+        if(compoundDrawables[3] != null)
+            DrawableCompat.setTintList(compoundDrawables[3], colorStateList)
+    }
+}
+
+/**
+ * Sets the tint list to apply to the compound drawables of the TextView.
+ * @param colorStateListResId the res id of the color resource to apply as a tint to the compound drawables of the TextView
+ */
+private fun TextView.setAllVersionCompoundDrawableTintList(@ColorRes colorStateListResId: Int?){
+    val colorStateList = ContextCompat.getColorStateList(context, colorStateListResId?:0)
+    setAllVersionNullableCompoundDrawableTintList(colorStateList)
+}
+
+/**
+ * Specifies the blending mode used to apply the tint specified by
+ * TextView.setCompoundDrawableTintList() to the compound drawables.
+ * @param colorTintMode the blending mode used to apply the tint, may be null to clear tint
+ */
+private fun TextView.setAllVersionNullableCompoundDrawableTintMode(colorTintMode: PorterDuff.Mode?){
+    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+        this.compoundDrawableTintMode = colorTintMode
+    }
+    else if(colorTintMode != null){
+        if(compoundDrawables[0] != null)
+            DrawableCompat.setTintMode(compoundDrawables[0], colorTintMode)
+        if(compoundDrawables[1] != null)
+            DrawableCompat.setTintMode(compoundDrawables[1], colorTintMode)
+        if(compoundDrawables[2] != null)
+            DrawableCompat.setTintMode(compoundDrawables[2], colorTintMode)
+        if(compoundDrawables[3] != null)
+            DrawableCompat.setTintMode(compoundDrawables[3], colorTintMode)
+    }
+    else{
+        if(compoundDrawables[0] != null)
+            DrawableCompat.setTintList(compoundDrawables[0], null)
+        if(compoundDrawables[1] != null)
+            DrawableCompat.setTintList(compoundDrawables[1], null)
+        if(compoundDrawables[2] != null)
+            DrawableCompat.setTintList(compoundDrawables[2], null)
+        if(compoundDrawables[3] != null)
+            DrawableCompat.setTintList(compoundDrawables[3], null)
+    }
+}
+
+/**
+ * Sets the drawable to appear above the text.
+ * @param drawable the drawable to appear above the text
+ */
+private fun TextView.setCompoundDrawableTop(drawable: Drawable?){
+    setCompoundDrawablesWithIntrinsicBounds(
+            compoundDrawables[0],
+            drawable,
+            compoundDrawables[2],
+            compoundDrawables[3]
+    )
+}
+
+/**
+ * Sets the drawable to appear above the text.
+ * @param drawableResId the resource id of the drawable to appear above the text
+ */
+private fun TextView.setCompoundDrawableTop(@DrawableRes drawableResId: Int?){
+    val drawableTop:Drawable? = ContextCompat.getDrawable(context, drawableResId?:0)
+    setCompoundDrawableTop(drawableTop)
 }
 
 /**

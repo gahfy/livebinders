@@ -4,7 +4,7 @@
 
 `fun `[`TextView`](https://developer.android.com/reference/android/widget/TextView.html)`.addLiveCursorVisible(cursorVisible: LiveData<`[`Boolean`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)`>?): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)
 
-Sets a live visibility for the cursor.
+Adds a live visibility for the cursor.
 
 **Related XML attribute:** app:liveCursorVisible
 

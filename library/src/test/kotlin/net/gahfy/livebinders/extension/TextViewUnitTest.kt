@@ -1,5 +1,8 @@
 package net.gahfy.livebinders.extension
 
+import android.content.res.ColorStateList
+import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.text.Editable
 import android.text.InputType
@@ -346,5 +349,430 @@ class TextViewUnitTest{
         assertEquals("Cursor visible must have been updated", true, textView.isCursorVisible)
         liveCursorVisible.value = null
         assertEquals("Cursor visible must have been updated", false, textView.isCursorVisible)
+    }
+
+    @Test
+    fun textview_addLiveDigits() {
+        // Given
+        val textView = mockTextView
+        val liveDigits = MutableLiveData<String>()
+
+        // When
+        textView.addLiveDigits(liveDigits)
+
+        // Then
+        liveDigits.value = null
+        assertEquals("Input type must have not been updated", textView.inputType, InputType.TYPE_NULL)
+        liveDigits.value = "123"
+        assertEquals("Input type must have been updated", textView.inputType, InputType.TYPE_CLASS_TEXT)
+        textView.inputType = InputType.TYPE_CLASS_NUMBER
+        liveDigits.value = "12345"
+        assertEquals("Input type must have not been updated", textView.inputType, InputType.TYPE_CLASS_NUMBER)
+    }
+
+    @Test
+    fun textview_addLiveDrawableBottom(){
+        // Given
+        val textView = mockTextView
+        val liveDrawableBottom = MutableLiveData<Drawable>()
+
+        // When
+        textView.addLiveDrawableBottom(liveDrawableBottom)
+
+        // Then
+        val currentDrawableBottom = getMockDrawable()
+        liveDrawableBottom.value = currentDrawableBottom
+        assertSame("Drawable bottom should have been updated", textView.compoundDrawables[3], currentDrawableBottom)
+        assertNotSame("Drawable left should have not been updated", textView.compoundDrawables[0], currentDrawableBottom)
+        assertNotSame("Drawable top should have not been updated", textView.compoundDrawables[1], currentDrawableBottom)
+        assertNotSame("Drawable right should have not been updated", textView.compoundDrawables[2], currentDrawableBottom)
+    }
+
+    @Test
+    fun textview_addLiveDrawableResIdBottom(){
+        // Given
+        val textView = mockTextView
+        val liveDrawableResIdBottom = MutableLiveData<Int>()
+
+        // When
+        textView.addLiveDrawableResIdBottom(liveDrawableResIdBottom)
+
+        // Then
+        liveDrawableResIdBottom.value = null
+        assertNull("Drawable bottom should have not been updated", textView.compoundDrawables[3])
+        liveDrawableResIdBottom.value = 0
+        assertNull("Drawable bottom should have not been updated", textView.compoundDrawables[3])
+        liveDrawableResIdBottom.value = 123
+        assertNotNull("Drawable bottom should have been updated", textView.compoundDrawables[3])
+    }
+
+    @Test
+    fun textview_addLiveDrawableEnd(){
+        // Given
+        val textView = mockTextView
+        val liveDrawableEnd = MutableLiveData<Drawable>()
+
+        // When
+        textView.addLiveDrawableEnd(liveDrawableEnd)
+
+        // Then
+        val currentDrawableEnd = getMockDrawable()
+        liveDrawableEnd.value = currentDrawableEnd
+        assertSame("Drawable end should have been updated", textView.compoundDrawablesRelative[2], currentDrawableEnd)
+        assertNotSame("Drawable start should have not been updated", textView.compoundDrawablesRelative[0], currentDrawableEnd)
+        assertNotSame("Drawable top should have not been updated", textView.compoundDrawablesRelative[1], currentDrawableEnd)
+        assertNotSame("Drawable bottom should have not been updated", textView.compoundDrawablesRelative[3], currentDrawableEnd)
+    }
+
+    @Test
+    fun textview_addLiveDrawableResIdEnd(){
+        // Given
+        val textView = mockTextView
+        val liveDrawableResIdEnd = MutableLiveData<Int>()
+
+        // When
+        textView.addLiveDrawableResIdEnd(liveDrawableResIdEnd)
+
+        // Then
+        liveDrawableResIdEnd.value = null
+        assertNull("Drawable end should have not been updated", textView.compoundDrawablesRelative[2])
+        liveDrawableResIdEnd.value = 0
+        assertNull("Drawable end should have not been updated", textView.compoundDrawablesRelative[2])
+        liveDrawableResIdEnd.value = 123
+        assertNotNull("Drawable end should have been updated", textView.compoundDrawablesRelative[2])
+    }
+
+    @Test
+    fun textview_addLiveDrawableLeft(){
+        // Given
+        val textView = mockTextView
+        val liveDrawableLeft = MutableLiveData<Drawable>()
+
+        // When
+        textView.addLiveDrawableLeft(liveDrawableLeft)
+
+        // Then
+        val currentDrawableLeft = getMockDrawable()
+        liveDrawableLeft.value = currentDrawableLeft
+        assertSame("Drawable left should have been updated", textView.compoundDrawables[0], currentDrawableLeft)
+        assertNotSame("Drawable top should have not been updated", textView.compoundDrawables[1], currentDrawableLeft)
+        assertNotSame("Drawable right should have not been updated", textView.compoundDrawables[2], currentDrawableLeft)
+        assertNotSame("Drawable bottom should have not been updated", textView.compoundDrawables[3], currentDrawableLeft)
+    }
+
+    @Test
+    fun textview_addLiveDrawableResIdLeft(){
+        // Given
+        val textView = mockTextView
+        val liveDrawableResIdLeft = MutableLiveData<Int>()
+
+        // When
+        textView.addLiveDrawableResIdLeft(liveDrawableResIdLeft)
+
+        // Then
+        liveDrawableResIdLeft.value = null
+        assertNull("Drawable left should have not been updated", textView.compoundDrawables[0])
+        liveDrawableResIdLeft.value = 0
+        assertNull("Drawable left should have not been updated", textView.compoundDrawables[0])
+        liveDrawableResIdLeft.value = 123
+        assertNotNull("Drawable left should have been updated", textView.compoundDrawables[0])
+    }
+
+    @Test
+    fun textview_addLiveDrawablePadding(){
+        // Given
+        val textView = mockTextView
+        val liveDrawablePadding = MutableLiveData<Int>()
+
+        // When
+        textView.addLiveDrawablePadding(liveDrawablePadding)
+
+        // Then
+        liveDrawablePadding.value = 123
+        assertEquals("Drawable padding should have been updated", textView.compoundDrawablePadding, 123)
+        liveDrawablePadding.value = null
+        assertEquals("Drawable padding should have not been updated", textView.compoundDrawablePadding, 123)
+        liveDrawablePadding.value = 12
+        assertEquals("Drawable padding should have been updated", textView.compoundDrawablePadding, 12)
+    }
+
+    @Test
+    fun textview_addLiveDrawableRight(){
+        // Given
+        val textView = mockTextView
+        val liveDrawableRight = MutableLiveData<Drawable>()
+
+        // When
+        textView.addLiveDrawableRight(liveDrawableRight)
+
+        // Then
+        val currentDrawableRight = getMockDrawable()
+        liveDrawableRight.value = currentDrawableRight
+        assertSame("Drawable right should have been updated", textView.compoundDrawables[2], currentDrawableRight)
+        assertNotSame("Drawable left should have not been updated", textView.compoundDrawables[0], currentDrawableRight)
+        assertNotSame("Drawable top should have not been updated", textView.compoundDrawables[1], currentDrawableRight)
+        assertNotSame("Drawable bottom should have not been updated", textView.compoundDrawables[3], currentDrawableRight)
+    }
+
+    @Test
+    fun textview_addLiveDrawableResIdRight(){
+        // Given
+        val textView = mockTextView
+        val liveDrawableResIdRight = MutableLiveData<Int>()
+
+        // When
+        textView.addLiveDrawableResIdRight(liveDrawableResIdRight)
+
+        // Then
+        liveDrawableResIdRight.value = null
+        assertNull("Drawable left should have not been updated", textView.compoundDrawables[2])
+        liveDrawableResIdRight.value = 0
+        assertNull("Drawable left should have not been updated", textView.compoundDrawables[2])
+        liveDrawableResIdRight.value = 123
+        assertNotNull("Drawable left should have been updated", textView.compoundDrawables[2])
+    }
+
+    @Test
+    fun textview_addLiveDrawableStart(){
+        // Given
+        val textView = mockTextView
+        val liveDrawableStart = MutableLiveData<Drawable>()
+
+        // When
+        textView.addLiveDrawableStart(liveDrawableStart)
+
+        // Then
+        val currentDrawableStart = getMockDrawable()
+        liveDrawableStart.value = currentDrawableStart
+        assertSame("Drawable start should have been updated", textView.compoundDrawablesRelative[0], currentDrawableStart)
+        assertNotSame("Drawable top should have not been updated", textView.compoundDrawablesRelative[1], currentDrawableStart)
+        assertNotSame("Drawable end should have not been updated", textView.compoundDrawablesRelative[2], currentDrawableStart)
+        assertNotSame("Drawable bottom should have not been updated", textView.compoundDrawablesRelative[3], currentDrawableStart)
+    }
+
+    @Test
+    fun textview_addLiveDrawableResIdStart(){
+        // Given
+        val textView = mockTextView
+        val liveDrawableResIdStart = MutableLiveData<Int>()
+
+        // When
+        textView.addLiveDrawableResIdStart(liveDrawableResIdStart)
+
+        // Then
+        liveDrawableResIdStart.value = null
+        assertNull("Drawable start should have not been updated", textView.compoundDrawablesRelative[0])
+        liveDrawableResIdStart.value = 0
+        assertNull("Drawable start should have not been updated", textView.compoundDrawablesRelative[0])
+        liveDrawableResIdStart.value = 123
+        assertNotNull("Drawable start should have been updated", textView.compoundDrawablesRelative[0])
+    }
+
+    @Test
+    fun textview_addLiveDrawableTint(){
+        // Given
+        val textView = mockTextView
+        val liveDrawableTint = MutableLiveData<ColorStateList>()
+
+        // When
+        textView.addLiveDrawableTint(liveDrawableTint)
+
+        val drawableLeft = getMockDrawable()
+        val drawableTop = getMockDrawable()
+        val drawableRight = getMockDrawable()
+        val drawableBottom = getMockDrawable()
+
+        val appliedColorStateList = mock(ColorStateList::class.java)
+
+        textView.setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop, drawableRight, drawableBottom)
+
+        // Then
+        liveDrawableTint.value = appliedColorStateList
+        assertSame("Drawable left tint should have been updated", appliedColorStateList, (textView.compoundDrawables[0] as CustomDrawable).getTintList())
+        assertSame("Drawable top tint should have been updated", appliedColorStateList, (textView.compoundDrawables[1] as CustomDrawable).getTintList())
+        assertSame("Drawable right tint should have been updated", appliedColorStateList, (textView.compoundDrawables[2] as CustomDrawable).getTintList())
+        assertSame("Drawable bottom tint should have been updated", appliedColorStateList, (textView.compoundDrawables[3] as CustomDrawable).getTintList())
+    }
+
+    @Test
+    fun textview_addLiveDrawableTintBelowM(){
+        // Given
+        setFinalStatic(Build.VERSION::class.java.getField("SDK_INT"), 22)
+        val textView = mockTextView
+        val liveDrawableTint = MutableLiveData<ColorStateList>()
+
+        // When
+        textView.addLiveDrawableTint(liveDrawableTint)
+
+        val drawableLeft = getMockDrawable()
+        val drawableTop = getMockDrawable()
+        val drawableRight = getMockDrawable()
+        val drawableBottom = getMockDrawable()
+
+        val appliedColorStateList = mock(ColorStateList::class.java)
+
+        textView.setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop, drawableRight, drawableBottom)
+
+        // Then
+        liveDrawableTint.value = appliedColorStateList
+        assertSame("Drawable left tint should have been updated", appliedColorStateList, (textView.compoundDrawables[0] as CustomDrawable).getTintList())
+        assertSame("Drawable top tint should have been updated", appliedColorStateList, (textView.compoundDrawables[1] as CustomDrawable).getTintList())
+        assertSame("Drawable right tint should have been updated", appliedColorStateList, (textView.compoundDrawables[2] as CustomDrawable).getTintList())
+        assertSame("Drawable bottom tint should have been updated", appliedColorStateList, (textView.compoundDrawables[3] as CustomDrawable).getTintList())
+
+        textView.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
+        var noException = true
+        try{
+            liveDrawableTint.value = appliedColorStateList
+        }
+        catch(e:Exception){
+            noException = false
+        }
+
+        assertTrue("No exception should have occurred", noException)
+
+    }
+
+    @Test
+    fun textview_addLiveDrawableTintResId(){
+        // Given
+        val textView = mockTextView
+        val liveDrawableTintResId = MutableLiveData<Int>()
+
+        // When
+        textView.addLiveDrawableTintResId(liveDrawableTintResId)
+
+        val drawableLeft = getMockDrawable()
+        val drawableTop = getMockDrawable()
+        val drawableRight = getMockDrawable()
+        val drawableBottom = getMockDrawable()
+
+        textView.setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop, drawableRight, drawableBottom)
+
+        // Then
+        liveDrawableTintResId.value = 123
+        assertNotNull("Drawable left tint should have been updated", (textView.compoundDrawables[0] as CustomDrawable).getTintList())
+        assertNotNull("Drawable top tint should have been updated", (textView.compoundDrawables[1] as CustomDrawable).getTintList())
+        assertNotNull("Drawable right tint should have been updated", (textView.compoundDrawables[2] as CustomDrawable).getTintList())
+        assertNotNull("Drawable bottom tint should have been updated", (textView.compoundDrawables[3] as CustomDrawable).getTintList())
+        liveDrawableTintResId.value = null
+        assertNull("Drawable left tint should have been updated", (textView.compoundDrawables[0] as CustomDrawable).getTintList())
+        assertNull("Drawable top tint should have been updated", (textView.compoundDrawables[1] as CustomDrawable).getTintList())
+        assertNull("Drawable right tint should have been updated", (textView.compoundDrawables[2] as CustomDrawable).getTintList())
+        assertNull("Drawable bottom tint should have been updated", (textView.compoundDrawables[3] as CustomDrawable).getTintList())
+    }
+
+    @Test
+    fun textview_addLiveDrawableTintMode(){
+        // Given
+        val textView = mockTextView
+        val liveDrawableTintMode = MutableLiveData<PorterDuff.Mode>()
+
+        // When
+        textView.addLiveDrawableTintMode(liveDrawableTintMode)
+
+        val drawableLeft = getMockDrawable()
+        val drawableTop = getMockDrawable()
+        val drawableRight = getMockDrawable()
+        val drawableBottom = getMockDrawable()
+
+        textView.setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop, drawableRight, drawableBottom)
+
+        // Then
+        liveDrawableTintMode.value = PorterDuff.Mode.ADD
+        assertEquals("Drawable left tint should have been updated", PorterDuff.Mode.ADD, (textView.compoundDrawables[0] as CustomDrawable).getTintMode())
+        assertEquals("Drawable top tint should have been updated", PorterDuff.Mode.ADD, (textView.compoundDrawables[1] as CustomDrawable).getTintMode())
+        assertEquals("Drawable right tint should have been updated", PorterDuff.Mode.ADD, (textView.compoundDrawables[2] as CustomDrawable).getTintMode())
+        assertEquals("Drawable bottom tint should have been updated", PorterDuff.Mode.ADD, (textView.compoundDrawables[3] as CustomDrawable).getTintMode())
+    }
+
+    @Test
+    fun textview_addLiveDrawableTintModeBelowM(){
+        // Given
+        setFinalStatic(Build.VERSION::class.java.getField("SDK_INT"), 22)
+        val textView = mockTextView
+        val liveDrawableTintMode = MutableLiveData<PorterDuff.Mode>()
+
+        // When
+        textView.addLiveDrawableTintMode(liveDrawableTintMode)
+
+        val drawableLeft = getMockDrawable()
+        val drawableTop = getMockDrawable()
+        val drawableRight = getMockDrawable()
+        val drawableBottom = getMockDrawable()
+
+        textView.setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop, drawableRight, drawableBottom)
+
+        // Then
+        textView.setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop, drawableRight, drawableBottom)
+        liveDrawableTintMode.value = PorterDuff.Mode.ADD
+        assertEquals("Drawable left tint should have been updated", PorterDuff.Mode.ADD, (textView.compoundDrawables[0] as CustomDrawable).getTintMode())
+        assertEquals("Drawable top tint should have been updated", PorterDuff.Mode.ADD, (textView.compoundDrawables[1] as CustomDrawable).getTintMode())
+        assertEquals("Drawable right tint should have been updated", PorterDuff.Mode.ADD, (textView.compoundDrawables[2] as CustomDrawable).getTintMode())
+        assertEquals("Drawable bottom tint should have been updated", PorterDuff.Mode.ADD, (textView.compoundDrawables[3] as CustomDrawable).getTintMode())
+
+        textView.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
+        var noException = true
+        try{
+            liveDrawableTintMode.value = PorterDuff.Mode.ADD
+        }
+        catch(e:Exception){
+            noException = false
+        }
+        assertTrue("No exception should occur", noException)
+
+        textView.setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop, drawableRight, drawableBottom)
+        textView.compoundDrawableTintList = mock(ColorStateList::class.java)
+        liveDrawableTintMode.value = null
+        assertNull("Drawable left tint should have been updated", (textView.compoundDrawables[0] as CustomDrawable).getTintList())
+        assertNull("Drawable top tint should have been updated", (textView.compoundDrawables[1] as CustomDrawable).getTintList())
+        assertNull("Drawable right tint should have been updated", (textView.compoundDrawables[2] as CustomDrawable).getTintList())
+        assertNull("Drawable bottom tint should have been updated", (textView.compoundDrawables[3] as CustomDrawable).getTintList())
+
+        textView.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
+        noException = true
+        try{
+            liveDrawableTintMode.value = null
+        }
+        catch(e:Exception){
+            noException = false
+        }
+        assertTrue("No exception should occur", noException)
+    }
+
+    @Test
+    fun textview_addLiveDrawableTop(){
+        // Given
+        val textView = mockTextView
+        val liveDrawableTop = MutableLiveData<Drawable>()
+
+        // When
+        textView.addLiveDrawableTop(liveDrawableTop)
+
+        // Then
+        val currentDrawableTop = getMockDrawable()
+        liveDrawableTop.value = currentDrawableTop
+        assertSame("Drawable top should have been updated", textView.compoundDrawables[1], currentDrawableTop)
+        assertNotSame("Drawable left should have not been updated", textView.compoundDrawables[0], currentDrawableTop)
+        assertNotSame("Drawable right should have not been updated", textView.compoundDrawables[2], currentDrawableTop)
+        assertNotSame("Drawable bottom should have not been updated", textView.compoundDrawables[3], currentDrawableTop)
+    }
+
+    @Test
+    fun textview_addLiveDrawableResIdTop(){
+        // Given
+        val textView = mockTextView
+        val liveDrawableResIdTop = MutableLiveData<Int>()
+
+        // When
+        textView.addLiveDrawableResIdTop(liveDrawableResIdTop)
+
+        // Then
+        liveDrawableResIdTop.value = null
+        assertNull("Drawable top should have not been updated", textView.compoundDrawables[1])
+        liveDrawableResIdTop.value = 0
+        assertNull("Drawable top should have not been updated", textView.compoundDrawables[1])
+        liveDrawableResIdTop.value = 123
+        assertNotNull("Drawable top should have been updated", textView.compoundDrawables[1])
     }
 }
