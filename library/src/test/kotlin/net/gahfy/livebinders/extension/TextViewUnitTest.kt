@@ -793,4 +793,22 @@ class TextViewUnitTest{
         liveEditable.value = null
         assertEquals("Input type should have not been updated", EditorInfo.TYPE_CLASS_TEXT, textView.inputType)
     }
+
+    @Test
+    fun textview_addLiveInputExtras() {
+        // Given
+        val textView = mockTextView
+        val liveInputExtras = MutableLiveData<Int>()
+
+        // When
+        textView.addLiveInputExtras(liveInputExtras)
+
+        // Then
+        liveInputExtras.value = null
+        assertNull("Input extras should have not been updated", textView.getInputExtras(false))
+        liveInputExtras.value = 0
+        assertNull("Input extras should have not been updated", textView.getInputExtras(false))
+        liveInputExtras.value = 123
+        assertNotNull("Input extras should have been updated", textView.getInputExtras(false))
+    }
 }

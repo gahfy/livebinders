@@ -15,6 +15,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.annotation.XmlRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.widget.TextViewCompat
@@ -364,6 +365,19 @@ fun TextView.addLiveDrawableTop(drawableTop: LiveData<Drawable>?){
 @BindingAdapter("liveEditable")
 fun TextView.addLiveEditable(editable: LiveData<Boolean>?) {
     addLiveData(editable, Observer { value -> setEditable(value) })
+}
+
+/**
+ * Adds the live extra input data of the text, which is the TextBoxAttribute.extras Bundle that will
+ * be filled in when creating an input connection. The given integer value is the resource
+ * identifier of an XML resource holding an &lt;input-extras&gt; XML tree.
+ *
+ * __Related XML attribute:__ app:liveEditorExtras
+ * @param xmlResId the live XML resource id holding an &lt;input-extras&gt; XML tree
+ */
+@BindingAdapter("liveEditorExtras")
+fun TextView.addLiveInputExtras(xmlResId: LiveData<Int>) {
+    addLiveData(xmlResId, Observer { value -> setNullableInputExtras(value) })
 }
 
 /** The minimum min text size that can be set without error */
@@ -812,6 +826,17 @@ private fun TextView.setEditable(editable: Boolean?) {
         keyListener = null
         setRawInputType(InputType.TYPE_NULL)
     }
+}
+
+/**
+ * Set the extra input data of the text, which is the TextBoxAttribute.extras Bundle that will be
+ * filled in when creating an input connection. The given integer is the resource identifier of an
+ * XML resource holding an &lt;input-extras&gt; XML tree.
+ * @param xmlResId the resource identifier of the XML resource holding the &lt;input-extras&gt; XML
+ * tree
+ */
+private fun TextView.setNullableInputExtras(@XmlRes xmlResId: Int?) {
+    setInputExtras(xmlResId ?: 0)
 }
 
 /**

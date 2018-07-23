@@ -2,6 +2,7 @@ package net.gahfy.livebinders.testutils
 
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
+import android.os.Bundle
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.method.DigitsKeyListener
@@ -34,6 +35,7 @@ private var drawableEnd:CustomDrawable? = null
 private var drawableTop:CustomDrawable? = null
 private var drawableBottom:CustomDrawable? = null
 private var drawablePadding:Int = 0
+private var inputExtras: Bundle? = null
 
 fun resetTextView(){
     autoLinkValue = 0
@@ -55,6 +57,7 @@ fun resetTextView(){
     drawableTop = null
     drawableBottom = null
     drawablePadding = 0
+    inputExtras = null
 }
 
 val mockTextView:TextView
@@ -209,6 +212,20 @@ val mockTextView:TextView
             arrayOf(drawableStart, drawableTop, drawableEnd, drawableBottom)
         }
         `when`(textView.compoundDrawablePadding).thenAnswer { drawablePadding }
+
+        // InputExtras
+        `when`(textView.setInputExtras(anyInt())).thenAnswer { invocation ->
+            val resId = invocation.arguments[0] as Int
+            inputExtras = if (resId > 0) Bundle() else null
+            null
+        }
+        `when`(textView.getInputExtras(anyBoolean())).thenAnswer { invocation ->
+            val create = invocation.arguments[0] as Boolean
+            if (create) {
+                inputExtras = Bundle()
+            }
+            inputExtras
+        }
 
         return textView
     }
