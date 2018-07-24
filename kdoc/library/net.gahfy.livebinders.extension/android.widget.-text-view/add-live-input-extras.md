@@ -8,6 +8,8 @@ Adds the live extra input data of the text, which is the TextBoxAttribute.extras
 be filled in when creating an input connection. The given integer value is the resource
 identifier of an XML resource holding an &amp;lt;input-extras&amp;gt; XML tree.
 
+**Related XML attribute:** app:liveEditorExtras
+
 ### Parameters
 
 `xmlResId` - the live XML resource id holding an &amp;lt;input-extras&amp;gt; XML tree

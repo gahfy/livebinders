@@ -380,6 +380,16 @@ fun TextView.addLiveInputExtras(xmlResId: LiveData<Int>) {
     addLiveData(xmlResId, Observer { value -> setNullableInputExtras(value) })
 }
 
+/**
+ * Adds a live TextView's elegant height metrics flag.
+ *
+ * __Related XML attribute:__ app:liveElegantTextHeight
+ * @param elegant the live elegant height metrics to add to the TextView
+ */
+fun TextView.addLiveElegantTextHeight(elegant: LiveData<Boolean>) {
+    addLiveData(elegant, Observer { value -> setNullableElegantTextHeightBeforeLollipop(value) })
+}
+
 /** The minimum min text size that can be set without error */
 private const val MIN_SETTABLE_AUTO_SIZE_MIN_TEXT_SIZE = 1
 /** The default min text size */
@@ -837,6 +847,18 @@ private fun TextView.setEditable(editable: Boolean?) {
  */
 private fun TextView.setNullableInputExtras(@XmlRes xmlResId: Int?) {
     setInputExtras(xmlResId ?: 0)
+}
+
+/**
+ * Set the TextView's elegant height metrics flag. This setting selects font variants that have not
+ * been compacted to fit Latin-based vertical metrics, and also increases top and bottom bounds to
+ * provide more space. Does nothing for Version before Lollipop
+ * @param elegant set the paint's elegant metrics flag
+ */
+private fun TextView.setNullableElegantTextHeightBeforeLollipop(elegant: Boolean?) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        isElegantTextHeight = (elegant == true)
+    }
 }
 
 /**

@@ -811,4 +811,42 @@ class TextViewUnitTest{
         liveInputExtras.value = 123
         assertNotNull("Input extras should have been updated", textView.getInputExtras(false))
     }
+
+    @Test
+    fun textview_addLiveElegantTextHeight() {
+        // Given
+        var textView = mockTextView
+        var liveElegantTextHeight = MutableLiveData<Boolean>()
+
+        // When
+        textView.addLiveElegantTextHeight(liveElegantTextHeight)
+
+        // Then
+        liveElegantTextHeight.value = true
+        assertEquals("Elegant text height should have been updated", true, textView.isElegantTextHeight)
+        liveElegantTextHeight.value = null
+        assertEquals("Elegant text height should have been updated", false, textView.isElegantTextHeight)
+        liveElegantTextHeight.value = false
+        assertEquals("Elegant text height should have been updated", false, textView.isElegantTextHeight)
+
+
+        setFinalStatic(Build.VERSION::class.java.getField("SDK_INT"), 20)
+        resetTextView()
+        textView = mockTextView
+        liveElegantTextHeight = MutableLiveData()
+
+        // When
+        textView.addLiveElegantTextHeight(liveElegantTextHeight)
+
+        var noException = true
+        try {
+            liveElegantTextHeight.value = true
+            liveElegantTextHeight.value = null
+            liveElegantTextHeight.value = false
+        } catch (e: Exception) {
+            noException = false
+        }
+
+        assertTrue("No exception should occur", noException)
+    }
 }

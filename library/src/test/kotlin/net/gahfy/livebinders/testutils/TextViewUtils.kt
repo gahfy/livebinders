@@ -36,6 +36,7 @@ private var drawableTop:CustomDrawable? = null
 private var drawableBottom:CustomDrawable? = null
 private var drawablePadding:Int = 0
 private var inputExtras: Bundle? = null
+private var elegantTextHeight: Boolean = false
 
 fun resetTextView(){
     autoLinkValue = 0
@@ -58,6 +59,7 @@ fun resetTextView(){
     drawableBottom = null
     drawablePadding = 0
     inputExtras = null
+    elegantTextHeight = false
 }
 
 val mockTextView:TextView
@@ -226,6 +228,13 @@ val mockTextView:TextView
             }
             inputExtras
         }
+
+        // Elegant Text Height
+        `when`(textView.setElegantTextHeight(anyBoolean())).thenAnswer { invocation ->
+            elegantTextHeight = invocation.arguments[0] as Boolean
+            null
+        }
+        `when`(textView.isElegantTextHeight).thenAnswer { elegantTextHeight }
 
         return textView
     }
