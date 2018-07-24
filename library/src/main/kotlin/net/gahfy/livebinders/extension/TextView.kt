@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.text.InputType
 import android.text.Layout
+import android.text.TextUtils
 import android.text.method.DigitsKeyListener
 import android.text.method.TextKeyListener
 import android.text.util.Linkify
@@ -378,6 +379,17 @@ fun TextView.addLiveEditable(editable: LiveData<Boolean>?) {
 @BindingAdapter("liveEditorExtras")
 fun TextView.addLiveInputExtras(xmlResId: LiveData<Int>) {
     addLiveData(xmlResId, Observer { value -> setNullableInputExtras(value) })
+}
+
+/**
+ * Adds a live truncate position if the text is longer than the TextView.
+ *
+ * __Related XML attribute__ app:liveEllipsize
+ * @param where the live truncate position to add to the TextView
+ */
+@BindingAdapter("liveEllipsize")
+fun TextView.addLiveEllipsize(where: LiveData<TextUtils.TruncateAt>) {
+    addLiveData(where, Observer { value -> ellipsize = value })
 }
 
 /**

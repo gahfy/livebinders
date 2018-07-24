@@ -5,6 +5,7 @@ import android.graphics.PorterDuff
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
+import android.text.TextUtils
 import android.text.method.DigitsKeyListener
 import android.text.method.KeyListener
 import android.text.method.TextKeyListener
@@ -37,6 +38,7 @@ private var drawableBottom:CustomDrawable? = null
 private var drawablePadding:Int = 0
 private var inputExtras: Bundle? = null
 private var elegantTextHeight: Boolean = false
+private var ellipsize: TextUtils.TruncateAt? = null
 
 fun resetTextView(){
     autoLinkValue = 0
@@ -60,6 +62,7 @@ fun resetTextView(){
     drawablePadding = 0
     inputExtras = null
     elegantTextHeight = false
+    ellipsize = null
 }
 
 val mockTextView:TextView
@@ -235,6 +238,13 @@ val mockTextView:TextView
             null
         }
         `when`(textView.isElegantTextHeight).thenAnswer { elegantTextHeight }
+
+        // Ellipsize
+        `when`(textView.setEllipsize(nullable(TextUtils.TruncateAt::class.java))).thenAnswer { invocation ->
+            ellipsize = invocation.arguments[0] as TextUtils.TruncateAt?
+            null
+        }
+        `when`(textView.ellipsize).thenAnswer { ellipsize }
 
         return textView
     }

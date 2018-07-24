@@ -4,10 +4,7 @@ import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.os.Build
-import android.text.Editable
-import android.text.InputType
-import android.text.Layout
-import android.text.Spannable
+import android.text.*
 import android.text.method.DigitsKeyListener
 import android.text.method.TextKeyListener
 import android.text.util.Linkify
@@ -848,5 +845,23 @@ class TextViewUnitTest{
         }
 
         assertTrue("No exception should occur", noException)
+    }
+
+    @Test
+    fun textview_addLiveEllipsize() {
+        // Given
+        val textView = mockTextView
+        val liveEllipsize = MutableLiveData<TextUtils.TruncateAt>()
+
+        // When
+        textView.addLiveEllipsize(liveEllipsize)
+
+        // Then
+        liveEllipsize.value = TextUtils.TruncateAt.START
+        assertEquals("Ellipsize should have been updated", TextUtils.TruncateAt.START, textView.ellipsize)
+        liveEllipsize.value = null
+        assertEquals("Ellipsize should have been updated", null, textView.ellipsize)
+        liveEllipsize.value = TextUtils.TruncateAt.END
+        assertEquals("Ellipsize should have been updated", TextUtils.TruncateAt.END, textView.ellipsize)
     }
 }
