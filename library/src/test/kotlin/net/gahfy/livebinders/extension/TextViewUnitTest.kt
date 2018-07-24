@@ -864,4 +864,22 @@ class TextViewUnitTest{
         liveEllipsize.value = TextUtils.TruncateAt.END
         assertEquals("Ellipsize should have been updated", TextUtils.TruncateAt.END, textView.ellipsize)
     }
+
+    @Test
+    fun textview_addLiveEms() {
+        // Given
+        val textView = mockTextView
+        val liveEms = MutableLiveData<Int>()
+
+        // When
+        textView.addLiveEms(liveEms)
+
+        // Then
+        liveEms.value = 2
+        assertEquals("Width should have been updated", 32, textView.width)
+        liveEms.value = null
+        assertEquals("Width should have not been updated", 32, textView.width)
+        liveEms.value = 3
+        assertEquals("Width should have been updated", 48, textView.width)
+    }
 }

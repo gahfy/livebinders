@@ -377,7 +377,7 @@ fun TextView.addLiveEditable(editable: LiveData<Boolean>?) {
  * @param xmlResId the live XML resource id holding an &lt;input-extras&gt; XML tree
  */
 @BindingAdapter("liveEditorExtras")
-fun TextView.addLiveInputExtras(xmlResId: LiveData<Int>) {
+fun TextView.addLiveInputExtras(xmlResId: LiveData<Int>?) {
     addLiveData(xmlResId, Observer { value -> setNullableInputExtras(value) })
 }
 
@@ -388,7 +388,7 @@ fun TextView.addLiveInputExtras(xmlResId: LiveData<Int>) {
  * @param where the live truncate position to add to the TextView
  */
 @BindingAdapter("liveEllipsize")
-fun TextView.addLiveEllipsize(where: LiveData<TextUtils.TruncateAt>) {
+fun TextView.addLiveEllipsize(where: LiveData<TextUtils.TruncateAt>?) {
     addLiveData(where, Observer { value -> ellipsize = value })
 }
 
@@ -398,8 +398,20 @@ fun TextView.addLiveEllipsize(where: LiveData<TextUtils.TruncateAt>) {
  * __Related XML attribute:__ app:liveElegantTextHeight
  * @param elegant the live elegant height metrics to add to the TextView
  */
-fun TextView.addLiveElegantTextHeight(elegant: LiveData<Boolean>) {
+@BindingAdapter("liveElegantTextHeight")
+fun TextView.addLiveElegantTextHeight(elegant: LiveData<Boolean>?) {
     addLiveData(elegant, Observer { value -> setNullableElegantTextHeightBeforeLollipop(value) })
+}
+
+/**
+ * Sets the live width of the TextView to be exactly ems value wide.
+ *
+ * __Related XML attribute:__ app:liveEms
+ * @param ems the live width of the TextView in terms of ems
+ */
+@BindingAdapter("liveEms")
+fun TextView.addLiveEms(ems: LiveData<Int>?) {
+    addLiveData(ems, Observer { value -> setNullableEms(value) })
 }
 
 /** The minimum min text size that can be set without error */
@@ -870,6 +882,16 @@ private fun TextView.setNullableInputExtras(@XmlRes xmlResId: Int?) {
 private fun TextView.setNullableElegantTextHeightBeforeLollipop(elegant: Boolean?) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
         isElegantTextHeight = (elegant == true)
+    }
+}
+
+/**
+ * Makes the TextView be exactly this many ems wide.
+ * @param ems the exact width of the TextView in terms of ems
+ */
+private fun TextView.setNullableEms(ems: Int?) {
+    if (ems != null) {
+        setEms(ems)
     }
 }
 

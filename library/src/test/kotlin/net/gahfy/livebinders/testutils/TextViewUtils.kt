@@ -39,6 +39,7 @@ private var drawablePadding:Int = 0
 private var inputExtras: Bundle? = null
 private var elegantTextHeight: Boolean = false
 private var ellipsize: TextUtils.TruncateAt? = null
+private var width: Int = 0
 
 fun resetTextView(){
     autoLinkValue = 0
@@ -63,6 +64,7 @@ fun resetTextView(){
     inputExtras = null
     elegantTextHeight = false
     ellipsize = null
+    width = 0
 }
 
 val mockTextView:TextView
@@ -245,6 +247,15 @@ val mockTextView:TextView
             null
         }
         `when`(textView.ellipsize).thenAnswer { ellipsize }
+
+        // Ems
+        `when`(textView.setEms(anyInt())).thenAnswer { invocation ->
+            width = (invocation.arguments[0] as Int) * 16
+            null
+        }
+
+        // Width
+        `when`(textView.width).thenAnswer { width }
 
         return textView
     }

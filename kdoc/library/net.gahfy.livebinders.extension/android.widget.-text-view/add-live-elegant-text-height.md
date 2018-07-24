@@ -2,7 +2,7 @@
 
 # addLiveElegantTextHeight
 
-`fun `[`TextView`](https://developer.android.com/reference/android/widget/TextView.html)`.addLiveElegantTextHeight(elegant: LiveData<`[`Boolean`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)`>): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)
+`fun `[`TextView`](https://developer.android.com/reference/android/widget/TextView.html)`.addLiveElegantTextHeight(elegant: LiveData<`[`Boolean`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)`>?): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)
 
 Adds a live TextView's elegant height metrics flag.
 

@@ -2,7 +2,7 @@
 
 # addLiveEllipsize
 
-`fun `[`TextView`](https://developer.android.com/reference/android/widget/TextView.html)`.addLiveEllipsize(where: LiveData<`[`TruncateAt`](https://developer.android.com/reference/android/text/TextUtils/TruncateAt.html)`>): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)
+`fun `[`TextView`](https://developer.android.com/reference/android/widget/TextView.html)`.addLiveEllipsize(where: LiveData<`[`TruncateAt`](https://developer.android.com/reference/android/text/TextUtils/TruncateAt.html)`>?): `[`Unit`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html)
 
 Adds a live truncate position if the text is longer than the TextView.
 
