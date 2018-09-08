@@ -44,6 +44,14 @@ fun getMockAppCompatActivity():AppCompatActivity{
         }
     }
 
+    `when`(resources.getFont(anyInt())).thenAnswer { invocation ->
+        if (invocation.arguments[0] == 1) {
+            firstFontFamily
+        } else {
+            secondFontFamily
+        }
+    }
+
     `when`(activity.resources).thenAnswer { resources }
 
     return activity

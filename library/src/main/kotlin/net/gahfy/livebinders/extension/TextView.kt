@@ -16,6 +16,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.annotation.FontRes
 import androidx.annotation.XmlRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
@@ -435,6 +436,17 @@ fun TextView.addLiveFallbackLineSpacing(fallbackLineSpacing: LiveData<Boolean>?)
 @BindingAdapter("liveFirstBaselineToTopHeight")
 fun TextView.addLiveFirstBaselineToTopHeight(firstBaselineToTopHeight: LiveData<Int>?) {
     addLiveData(firstBaselineToTopHeight, Observer { value -> setNullableFirstBaselineToTopHeight(value) })
+}
+
+/**
+ * Adds a live font family from the identifier of a XML resource describing the font.
+ *
+ * __Related XML attribute:__ app:liveFontFamily
+ * @param fontFamily the live font family to add the TextView
+ */
+@BindingAdapter("liveFontFamily")
+fun TextView.addLiveFontFamily(fontFamily: LiveData<Int>?) {
+    addLiveData(fontFamily, Observer { value -> setNullableFontFamilyBelowO(value) })
 }
 
 /** The minimum min text size that can be set without error */
@@ -944,6 +956,18 @@ private fun TextView.setNullableFallbackLineSpacingBelowP(fallbackLineSpacing: B
 private fun TextView.setNullableFirstBaselineToTopHeight(firstBaselineToTopHeight: Int?) {
     if (firstBaselineToTopHeight != null) {
         TextViewCompat.setFirstBaselineToTopHeight(this, firstBaselineToTopHeight)
+    }
+}
+
+/**
+ * Sets a font family from XML resources to a TextView.
+ *
+ *@param fontFamily the XML resource identifier of the font
+ */
+private fun TextView.setNullableFontFamilyBelowO(@FontRes fontFamily: Int?) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && fontFamily != null) {
+        val typeface = context.resources.getFont(fontFamily)
+        setTypeface(typeface)
     }
 }
 

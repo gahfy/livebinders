@@ -2,6 +2,7 @@ package net.gahfy.livebinders.testutils
 
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
+import android.graphics.Typeface
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
@@ -42,6 +43,7 @@ private var ellipsize: TextUtils.TruncateAt? = null
 private var width: Int = 0
 private var fallbackLineSpacing: Boolean = true
 private var firstBaselineToTopHeight: Int = 0
+private var typeface: Typeface? = null
 
 fun resetTextView(){
     autoLinkValue = 0
@@ -69,6 +71,7 @@ fun resetTextView(){
     width = 0
     fallbackLineSpacing = true
     firstBaselineToTopHeight = 0
+    typeface = null
 }
 
 val mockTextView:TextView
@@ -272,6 +275,13 @@ val mockTextView:TextView
             null
         }
         `when`(textView.firstBaselineToTopHeight).thenAnswer { firstBaselineToTopHeight }
+
+        // typeface
+        `when`(textView.setTypeface(any(Typeface::class.java))).thenAnswer { invocation ->
+            typeface = (invocation.arguments[0] as Typeface)
+            null
+        }
+        `when`(textView.typeface).thenAnswer { typeface }
 
         // Width
         `when`(textView.width).thenAnswer { width }
