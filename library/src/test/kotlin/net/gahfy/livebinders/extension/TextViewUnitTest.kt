@@ -882,4 +882,43 @@ class TextViewUnitTest{
         liveEms.value = 3
         assertEquals("Width should have been updated", 48, textView.width)
     }
+
+    @Test
+    fun textview_addLiveFallbackLineSpacing() {
+        // Given
+        var textView = mockTextView
+        var liveFallbackLineSpacing = MutableLiveData<Boolean>()
+
+        // When
+        textView.addLiveFallbackLineSpacing(liveFallbackLineSpacing)
+
+        // Then
+        liveFallbackLineSpacing.value = false
+        assertEquals("fallback line spacing should have been updated", false, textView.isFallbackLineSpacing)
+        liveFallbackLineSpacing.value = null
+        assertEquals("fallback line spacing should have been updated", true, textView.isFallbackLineSpacing)
+        liveFallbackLineSpacing.value = false
+        assertEquals("fallback line spacing should have been updated", false, textView.isFallbackLineSpacing)
+        liveFallbackLineSpacing.value = true
+        assertEquals("fallback line spacing should have been updated", true, textView.isFallbackLineSpacing)
+
+        setFinalStatic(Build.VERSION::class.java.getField("SDK_INT"), 27)
+        resetTextView()
+        textView = mockTextView
+        liveFallbackLineSpacing = MutableLiveData()
+
+        // When
+        textView.addLiveFallbackLineSpacing(liveFallbackLineSpacing)
+
+        var noException = true
+        try {
+            liveFallbackLineSpacing.value = true
+            liveFallbackLineSpacing.value = null
+            liveFallbackLineSpacing.value = false
+        } catch (e: Exception) {
+            noException = false
+        }
+
+        assertTrue("No exception should occur", noException)
+    }
 }

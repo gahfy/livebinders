@@ -40,6 +40,7 @@ private var inputExtras: Bundle? = null
 private var elegantTextHeight: Boolean = false
 private var ellipsize: TextUtils.TruncateAt? = null
 private var width: Int = 0
+private var fallbackLineSpacing: Boolean = true
 
 fun resetTextView(){
     autoLinkValue = 0
@@ -65,6 +66,7 @@ fun resetTextView(){
     elegantTextHeight = false
     ellipsize = null
     width = 0
+    fallbackLineSpacing = true
 }
 
 val mockTextView:TextView
@@ -253,6 +255,14 @@ val mockTextView:TextView
             width = (invocation.arguments[0] as Int) * 16
             null
         }
+
+        // Fallback line spacing
+        `when`(textView.setFallbackLineSpacing(anyBoolean())).thenAnswer { invocation ->
+            fallbackLineSpacing = (invocation.arguments[0] as Boolean)
+            null
+        }
+
+        `when`(textView.isFallbackLineSpacing).thenAnswer { fallbackLineSpacing }
 
         // Width
         `when`(textView.width).thenAnswer { width }

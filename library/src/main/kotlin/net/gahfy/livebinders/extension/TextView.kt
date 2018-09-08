@@ -404,7 +404,7 @@ fun TextView.addLiveElegantTextHeight(elegant: LiveData<Boolean>?) {
 }
 
 /**
- * Sets the live width of the TextView to be exactly ems value wide.
+ * Adds a live width of the TextView to be exactly ems value wide.
  *
  * __Related XML attribute:__ app:liveEms
  * @param ems the live width of the TextView in terms of ems
@@ -412,6 +412,17 @@ fun TextView.addLiveElegantTextHeight(elegant: LiveData<Boolean>?) {
 @BindingAdapter("liveEms")
 fun TextView.addLiveEms(ems: LiveData<Int>?) {
     addLiveData(ems, Observer { value -> setNullableEms(value) })
+}
+
+/**
+ * Adds a live status of fallback line spacing of the TextView
+ *
+ * __Related XML attribute:__ app:liveFallbackLineSpacing
+ * @param fallbackLineSpacing the live status of fallback line spacing of the TextView
+ */
+@BindingAdapter("liveFallbackLineSpacing")
+fun TextView.addLiveFallbackLineSpacing(fallbackLineSpacing: LiveData<Boolean>?) {
+    addLiveData(fallbackLineSpacing, Observer { value -> setNullableFallbackLineSpacing(value) })
 }
 
 /** The minimum min text size that can be set without error */
@@ -892,6 +903,22 @@ private fun TextView.setNullableElegantTextHeightBeforeLollipop(elegant: Boolean
 private fun TextView.setNullableEms(ems: Int?) {
     if (ems != null) {
         setEms(ems)
+    }
+}
+
+/**
+ * Set whether to respect the ascent and descent of the fallback fonts that are used in displaying
+ * the text (which is needed to avoid text from consecutive lines running into each other). If set,
+ * fallback fonts that end up getting used can increase the ascent and descent of the lines that
+ * they are used on.
+ *
+ * It is required to be true if text could be in languages like Burmese or Tibetan where text is
+ * typically much taller or deeper than Latin text.
+ * @param fallbackLineSpacing whether to expand linespacing based on fallback fonts, true by default
+ */
+private fun TextView.setNullableFallbackLineSpacing(fallbackLineSpacing: Boolean?) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        isFallbackLineSpacing = fallbackLineSpacing != false
     }
 }
 
