@@ -422,7 +422,19 @@ fun TextView.addLiveEms(ems: LiveData<Int>?) {
  */
 @BindingAdapter("liveFallbackLineSpacing")
 fun TextView.addLiveFallbackLineSpacing(fallbackLineSpacing: LiveData<Boolean>?) {
-    addLiveData(fallbackLineSpacing, Observer { value -> setNullableFallbackLineSpacing(value) })
+    addLiveData(fallbackLineSpacing, Observer { value -> setNullableFallbackLineSpacingBelowP(value) })
+}
+
+
+/**
+ * Adds a live padding between top of the view and baseline of the text.
+ *
+ * __Related XML attribute:__ app:liveFirstBaselineToTopHeight
+ * @param firstBaselineToTopHeight the live top padding of the Text
+ */
+@BindingAdapter("liveFirstBaselineToTopHeight")
+fun TextView.addLiveFirstBaselineToTopHeight(firstBaselineToTopHeight: LiveData<Int>?) {
+    addLiveData(firstBaselineToTopHeight, Observer { value -> setNullableFirstBaselineToTopHeight(value) })
 }
 
 /** The minimum min text size that can be set without error */
@@ -916,9 +928,22 @@ private fun TextView.setNullableEms(ems: Int?) {
  * typically much taller or deeper than Latin text.
  * @param fallbackLineSpacing whether to expand linespacing based on fallback fonts, true by default
  */
-private fun TextView.setNullableFallbackLineSpacing(fallbackLineSpacing: Boolean?) {
+private fun TextView.setNullableFallbackLineSpacingBelowP(fallbackLineSpacing: Boolean?) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
         isFallbackLineSpacing = fallbackLineSpacing != false
+    }
+}
+
+/**
+ * Updates the top padding of the TextView so that firstBaselineToTopHeight is equal to the distance
+ * between the firt text baseline and the top of this TextView. Note that if FontMetrics.top or
+ * FontMetrics.ascent was already greater than firstBaselineToTopHeight, the top padding is not
+ * updated.
+ * @param firstBaselineToTopHeight distance between first baseline to top of the container in pixels
+ */
+private fun TextView.setNullableFirstBaselineToTopHeight(firstBaselineToTopHeight: Int?) {
+    if (firstBaselineToTopHeight != null) {
+        TextViewCompat.setFirstBaselineToTopHeight(this, firstBaselineToTopHeight)
     }
 }
 

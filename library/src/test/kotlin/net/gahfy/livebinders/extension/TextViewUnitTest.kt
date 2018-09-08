@@ -921,4 +921,22 @@ class TextViewUnitTest{
 
         assertTrue("No exception should occur", noException)
     }
+
+    @Test
+    fun textview_addLiveFirstBaselineToTopHeight() {
+        // Given
+        val textView = mockTextView
+        val liveFirstBaseLineToTopHeight = MutableLiveData<Int>()
+
+        // When
+        textView.addLiveFirstBaselineToTopHeight(liveFirstBaseLineToTopHeight)
+
+        // Then
+        liveFirstBaseLineToTopHeight.value = 16
+        assertEquals("fallback line spacing should have been updated", 16, textView.firstBaselineToTopHeight)
+        liveFirstBaseLineToTopHeight.value = null
+        assertEquals("fallback line spacing should not have been updated", 16, textView.firstBaselineToTopHeight)
+        liveFirstBaseLineToTopHeight.value = 32
+        assertEquals("fallback line spacing should have been updated", 32, textView.firstBaselineToTopHeight)
+    }
 }

@@ -41,6 +41,7 @@ private var elegantTextHeight: Boolean = false
 private var ellipsize: TextUtils.TruncateAt? = null
 private var width: Int = 0
 private var fallbackLineSpacing: Boolean = true
+private var firstBaselineToTopHeight: Int = 0
 
 fun resetTextView(){
     autoLinkValue = 0
@@ -67,6 +68,7 @@ fun resetTextView(){
     ellipsize = null
     width = 0
     fallbackLineSpacing = true
+    firstBaselineToTopHeight = 0
 }
 
 val mockTextView:TextView
@@ -263,6 +265,13 @@ val mockTextView:TextView
         }
 
         `when`(textView.isFallbackLineSpacing).thenAnswer { fallbackLineSpacing }
+
+        // firstBaselineToTopHeight
+        `when`(textView.setFirstBaselineToTopHeight(anyInt())).thenAnswer { invocation ->
+            firstBaselineToTopHeight = (invocation.arguments[0] as Int)
+            null
+        }
+        `when`(textView.firstBaselineToTopHeight).thenAnswer { firstBaselineToTopHeight }
 
         // Width
         `when`(textView.width).thenAnswer { width }
