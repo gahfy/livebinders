@@ -19,6 +19,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.FontRes
 import androidx.annotation.XmlRes
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.widget.TextViewCompat
 import androidx.databinding.BindingAdapter
@@ -446,7 +447,7 @@ fun TextView.addLiveFirstBaselineToTopHeight(firstBaselineToTopHeight: LiveData<
  */
 @BindingAdapter("liveFontFamily")
 fun TextView.addLiveFontFamily(fontFamily: LiveData<Int>?) {
-    addLiveData(fontFamily, Observer { value -> setNullableFontFamilyBelowO(value) })
+    addLiveData(fontFamily, Observer { value -> setNullableFontFamily(value) })
 }
 
 /** The minimum min text size that can be set without error */
@@ -964,11 +965,9 @@ private fun TextView.setNullableFirstBaselineToTopHeight(firstBaselineToTopHeigh
  *
  *@param fontFamily the XML resource identifier of the font
  */
-private fun TextView.setNullableFontFamilyBelowO(@FontRes fontFamily: Int?) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && fontFamily != null) {
-        val typeface = context.resources.getFont(fontFamily)
-        setTypeface(typeface)
-    }
+private fun TextView.setNullableFontFamily(@FontRes fontFamily: Int?) {
+    val typeface = ResourcesCompat.getFont(context, fontFamily ?: 0)
+    setTypeface(typeface)
 }
 
 /**

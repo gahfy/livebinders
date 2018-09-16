@@ -939,41 +939,4 @@ class TextViewUnitTest{
         liveFirstBaseLineToTopHeight.value = 32
         assertEquals("fallback line spacing should have been updated", 32, textView.firstBaselineToTopHeight)
     }
-
-    @Test
-    fun textview_addLiveFontFamily() {
-        // Given
-        var textView = mockTextView
-        var liveFontFamily = MutableLiveData<Int>()
-
-        // When
-        textView.addLiveFontFamily(liveFontFamily)
-
-        // Then
-        liveFontFamily.value = 1
-        assertSame("fallback line spacing should have been updated", firstFontFamily, textView.typeface)
-        liveFontFamily.value = null
-        assertSame("fallback line spacing should have been updated", firstFontFamily, textView.typeface)
-        liveFontFamily.value = 2
-        assertSame("fallback line spacing should have been updated", secondFontFamily, textView.typeface)
-
-        setFinalStatic(Build.VERSION::class.java.getField("SDK_INT"), 25)
-        resetTextView()
-        textView = mockTextView
-        liveFontFamily = MutableLiveData()
-
-        // When
-        textView.addLiveFontFamily(liveFontFamily)
-
-        var noException = true
-        try {
-            liveFontFamily.value = 1
-            liveFontFamily.value = null
-            liveFontFamily.value = 2
-        } catch (e: Exception) {
-            noException = false
-        }
-
-        assertTrue("No exception should occur", noException)
-    }
 }

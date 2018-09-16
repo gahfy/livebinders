@@ -1,7 +1,6 @@
 package net.gahfy.livebinders.testutils
 
 import android.content.res.ColorStateList
-import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleRegistry
@@ -31,28 +30,6 @@ fun getMockAppCompatActivity():AppCompatActivity{
             mock(ColorStateList::class.java)
         }
     }
-
-    val resources = mock(Resources::class.java)
-    // Safe, we need it for unit test of AppCompat
-    @Suppress("DEPRECATION")
-    `when`(resources.getColorStateList(anyInt())).thenAnswer { invocation ->
-        if(invocation.arguments[0] == 0){
-            null
-        }
-        else{
-            mock(ColorStateList::class.java)
-        }
-    }
-
-    `when`(resources.getFont(anyInt())).thenAnswer { invocation ->
-        if (invocation.arguments[0] == 1) {
-            firstFontFamily
-        } else {
-            secondFontFamily
-        }
-    }
-
-    `when`(activity.resources).thenAnswer { resources }
 
     return activity
 }
