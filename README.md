@@ -20,3 +20,4 @@ Feel free to contribute by sending pull requests.
 
 * All code must have documentation and .md file must be generated with `./gradlew :library:dokka` command
 * Code coverage must remain above 95%. Check code coverage with `./gradlew :library:createDebugUnitTestCoverageReport :library:createReleaseUnitTestCoverageReport` command, then browse `/library/build/reports/jacoco` folder to check code coverage
+
