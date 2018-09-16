@@ -2,7 +2,6 @@ package net.gahfy.livebinders.testutils
 
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
-import android.graphics.Typeface
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
@@ -10,6 +9,7 @@ import android.text.TextUtils
 import android.text.method.DigitsKeyListener
 import android.text.method.KeyListener
 import android.text.method.TextKeyListener
+import android.view.Gravity
 import android.widget.TextView
 import androidx.core.graphics.drawable.TintAwareDrawable
 import org.mockito.ArgumentMatchers
@@ -40,10 +40,13 @@ private var drawablePadding:Int = 0
 private var inputExtras: Bundle? = null
 private var elegantTextHeight: Boolean = false
 private var ellipsize: TextUtils.TruncateAt? = null
-private var width: Int = 0
 private var fallbackLineSpacing: Boolean = true
 private var firstBaselineToTopHeight: Int = 0
-private var typeface: Typeface? = null
+private var fontFeatureSettings: String? = null
+private var freezesText = false
+private var gravity: Int = Gravity.TOP.or(Gravity.START)
+private var height: Int = 0
+private var width: Int = 0
 
 fun resetTextView(){
     autoLinkValue = 0
@@ -68,10 +71,13 @@ fun resetTextView(){
     inputExtras = null
     elegantTextHeight = false
     ellipsize = null
-    width = 0
     fallbackLineSpacing = true
     firstBaselineToTopHeight = 0
-    typeface = null
+    fontFeatureSettings = null
+    freezesText = false
+    gravity = Gravity.TOP.or(Gravity.START)
+    height = 0
+    width = 0
 }
 
 val mockTextView:TextView
@@ -276,12 +282,33 @@ val mockTextView:TextView
         }
         `when`(textView.firstBaselineToTopHeight).thenAnswer { firstBaselineToTopHeight }
 
-        // typeface
-        `when`(textView.setTypeface(any(Typeface::class.java))).thenAnswer { invocation ->
-            typeface = (invocation.arguments[0] as Typeface)
+        // fontFeatureSettings
+        `when`(textView.fontFeatureSettings).thenAnswer { fontFeatureSettings }
+        `when`(textView.setFontFeatureSettings(nullable(String::class.java))).thenAnswer { invacation ->
+            fontFeatureSettings = invacation.arguments[0] as String?
             null
         }
-        `when`(textView.typeface).thenAnswer { typeface }
+
+        // freezesText
+        `when`(textView.freezesText).thenAnswer { freezesText }
+        `when`(textView.setFreezesText(anyBoolean())).thenAnswer { invacation ->
+            freezesText = invacation.arguments[0] as Boolean
+            null
+        }
+
+        // Gravity
+        `when`(textView.setGravity(anyInt())).thenAnswer { invocation ->
+            gravity = invocation.arguments[0] as Int
+            null
+        }
+        `when`(textView.gravity).thenAnswer { gravity }
+
+        // Height
+        `when`(textView.setHeight(anyInt())).thenAnswer { invocation ->
+            height = invocation.arguments[0] as Int
+            null
+        }
+        `when`(textView.height).thenAnswer { height }
 
         // Width
         `when`(textView.width).thenAnswer { width }

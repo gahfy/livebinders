@@ -11,6 +11,7 @@ import android.text.method.DigitsKeyListener
 import android.text.method.TextKeyListener
 import android.text.util.Linkify
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
@@ -448,6 +449,50 @@ fun TextView.addLiveFirstBaselineToTopHeight(firstBaselineToTopHeight: LiveData<
 @BindingAdapter("liveFontFamily")
 fun TextView.addLiveFontFamily(fontFamily: LiveData<Int>?) {
     addLiveData(fontFamily, Observer { value -> setNullableFontFamily(value) })
+}
+
+/**
+ * Adds a live font feature settings.
+ *
+ * __Related XML attribute:__ app:liveFontFeatureSettings
+ * @param fontFeatureSettings the live font feature settings to add the TextView
+ */
+@BindingAdapter("liveFontFeatureSettings")
+fun TextView.addLiveFontFeatureSettings(fontFeatureSettings: LiveData<String>?) {
+    addLiveData(fontFeatureSettings, Observer { value -> setFontFeatureSettingsBeforeLollipop(value) })
+}
+
+/**
+ * Adds a live freezes text.
+ *
+ * __Related XML attribute:__ app:liveFreezesText
+ * @param freezesText the live freezes text to add the TextView
+ */
+@BindingAdapter("liveFreezesText")
+fun TextView.addLiveFreezesText(freezesText: LiveData<Boolean>?) {
+    addLiveData(freezesText, Observer { value -> setFreezesText(value == true) })
+}
+
+/**
+ * Adds a live gravity.
+ *
+ * __Related XML attribute:__ app:liveGravity
+ * @param gravity the live gravity to add to the TextView
+ */
+@BindingAdapter("liveGravity")
+fun TextView.addLiveGravity(gravity: LiveData<Int>?) {
+    addLiveData(gravity, Observer { value -> setNullableGravity(value) })
+}
+
+/**
+ * Adds a live height (in pixels)
+ *
+ * __Related XML attribute:__ app:liveHeight
+ * @param height the live height to add to the TextView
+ */
+@BindingAdapter("liveHeight")
+fun TextView.addLiveHeight(height: LiveData<Int>?) {
+    addLiveData(height, Observer { value -> setNullableHeight(value) })
 }
 
 /** The minimum min text size that can be set without error */
@@ -968,6 +1013,37 @@ private fun TextView.setNullableFirstBaselineToTopHeight(firstBaselineToTopHeigh
 private fun TextView.setNullableFontFamily(@FontRes fontFamily: Int?) {
     val typeface = ResourcesCompat.getFont(context, fontFamily ?: 0)
     setTypeface(typeface)
+}
+
+/**
+ * Sets font feature settings
+ *
+ * @param fontFeatureSettings font feature settings represented as CSS compatible string
+ */
+private fun TextView.setFontFeatureSettingsBeforeLollipop(fontFeatureSettings: String?) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        setFontFeatureSettings(fontFeatureSettings)
+    }
+}
+
+/**
+ * Sets the gravity of the TextView.
+ *
+ * @param gravity the gravity to set to the TextView
+ */
+private fun TextView.setNullableGravity(gravity: Int?) {
+    setGravity(gravity ?: (Gravity.TOP.or(Gravity.START)))
+}
+
+/**
+ * Sets the height of the TextView in pixels
+ *
+ * @param height the height in pixels to set to the TextView
+ */
+private fun TextView.setNullableHeight(height: Int?) {
+    if (height != null) {
+        setHeight(height)
+    }
 }
 
 /**

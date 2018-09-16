@@ -9,6 +9,7 @@ import android.text.method.DigitsKeyListener
 import android.text.method.TextKeyListener
 import android.text.util.Linkify
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -938,5 +939,98 @@ class TextViewUnitTest{
         assertEquals("fallback line spacing should not have been updated", 16, textView.firstBaselineToTopHeight)
         liveFirstBaseLineToTopHeight.value = 32
         assertEquals("fallback line spacing should have been updated", 32, textView.firstBaselineToTopHeight)
+    }
+
+    @Test
+    fun textview_addLiveFontFeatureSettings() {
+        // Given
+        var textView = mockTextView
+        var liveFontFeatureSettings = MutableLiveData<String>()
+
+        // When
+        textView.addLiveFontFeatureSettings(liveFontFeatureSettings)
+
+        // Then
+        liveFontFeatureSettings.value = "a"
+        assertEquals("font feature settings should have been updated", "a", textView.fontFeatureSettings)
+        liveFontFeatureSettings.value = null
+        assertEquals("font feature settings should have been updated", null, textView.fontFeatureSettings)
+        liveFontFeatureSettings.value = "b"
+        assertEquals("font feature settings should have been updated", "b", textView.fontFeatureSettings)
+
+        setFinalStatic(Build.VERSION::class.java.getField("SDK_INT"), 20)
+        resetTextView()
+        textView = mockTextView
+        liveFontFeatureSettings = MutableLiveData()
+
+        // When
+        textView.addLiveFontFeatureSettings(liveFontFeatureSettings)
+
+        var noException = true
+        try {
+            liveFontFeatureSettings.value = "a"
+            liveFontFeatureSettings.value = null
+            liveFontFeatureSettings.value = "b"
+        } catch (e: Exception) {
+            noException = false
+        }
+
+        assertTrue("No exception should occur", noException)
+    }
+
+    @Test
+    fun textview_addLiveFreezesText() {
+        // Given
+        val textView = mockTextView
+        val liveFreezesText = MutableLiveData<Boolean>()
+
+        // When
+        textView.addLiveFreezesText(liveFreezesText)
+
+        // Then
+        liveFreezesText.value = true
+        assertEquals("freezes text should have been updated", true, textView.freezesText)
+        liveFreezesText.value = null
+        assertEquals("freezes text should have been updated", false, textView.freezesText)
+        liveFreezesText.value = true
+        assertEquals("freezes text should have been updated", true, textView.freezesText)
+        liveFreezesText.value = false
+        assertEquals("freezes text should have been updated", false, textView.freezesText)
+    }
+
+    @Test
+    fun textview_addLiveGravity() {
+        // Given
+        val textView = mockTextView
+        val liveGravity = MutableLiveData<Int>()
+
+        // When
+        textView.addLiveGravity(liveGravity)
+
+        // Then
+        liveGravity.value = Gravity.BOTTOM
+        assertEquals("gravity should have been updated", Gravity.BOTTOM, textView.gravity)
+        liveGravity.value = null
+        assertEquals("gravity should have been updated", Gravity.TOP.or(Gravity.START), textView.gravity)
+        liveGravity.value = Gravity.RIGHT
+        assertEquals("gravity should have been updated", Gravity.RIGHT, textView.gravity)
+    }
+
+    @Test
+    fun textview_addLiveHeight() {
+        // Given
+        val textView = mockTextView
+        val liveHeight = MutableLiveData<Int>()
+
+        // When
+        textView.addLiveHeight(liveHeight)
+
+        // Then
+        liveHeight.value = 16
+        assertEquals("height should have been updated", 16, textView.height)
+        liveHeight.value = null
+        assertEquals("height should not have been updated", 16, textView.height)
+        liveHeight.value = 32
+        assertEquals("height should have been updated", 32, textView.height)
     }
 }

@@ -35,6 +35,10 @@ $dokka.location:net.gahfy.livebinders.extension$addLiveEms(android.widget.TextVi
 $dokka.location:net.gahfy.livebinders.extension$addLiveFallbackLineSpacing(android.widget.TextView, androidx.lifecycle.LiveData((kotlin.Boolean)))net.gahfy.livebinders.extension/android.widget.-text-view/add-live-fallback-line-spacing.md
 $dokka.location:net.gahfy.livebinders.extension$addLiveFirstBaselineToTopHeight(android.widget.TextView, androidx.lifecycle.LiveData((kotlin.Int)))net.gahfy.livebinders.extension/android.widget.-text-view/add-live-first-baseline-to-top-height.md
 $dokka.location:net.gahfy.livebinders.extension$addLiveFontFamily(android.widget.TextView, androidx.lifecycle.LiveData((kotlin.Int)))net.gahfy.livebinders.extension/android.widget.-text-view/add-live-font-family.md
+$dokka.location:net.gahfy.livebinders.extension$addLiveFontFeatureSettings(android.widget.TextView, androidx.lifecycle.LiveData((kotlin.String)))net.gahfy.livebinders.extension/android.widget.-text-view/add-live-font-feature-settings.md
+$dokka.location:net.gahfy.livebinders.extension$addLiveFreezesText(android.widget.TextView, androidx.lifecycle.LiveData((kotlin.Boolean)))net.gahfy.livebinders.extension/android.widget.-text-view/add-live-freezes-text.md
+$dokka.location:net.gahfy.livebinders.extension$addLiveGravity(android.widget.TextView, androidx.lifecycle.LiveData((kotlin.Int)))net.gahfy.livebinders.extension/android.widget.-text-view/add-live-gravity.md
+$dokka.location:net.gahfy.livebinders.extension$addLiveHeight(android.widget.TextView, androidx.lifecycle.LiveData((kotlin.Int)))net.gahfy.livebinders.extension/android.widget.-text-view/add-live-height.md
 $dokka.location:net.gahfy.livebinders.extension$addLiveInputExtras(android.widget.TextView, androidx.lifecycle.LiveData((kotlin.Int)))net.gahfy.livebinders.extension/android.widget.-text-view/add-live-input-extras.md
 $dokka.location:net.gahfy.livebinders.extension$parentActivity#android.view.Viewnet.gahfy.livebinders.extension/android.view.-view/parent-activity.md
 net.gahfy.livebinders.extension
